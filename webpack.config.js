@@ -44,6 +44,24 @@ module.exports = {
         loader: 'source-map-loader',
         enforce: 'pre',
       },
+      {
+        test: /\.css$/,
+        use: [
+          {loader: 'style-loader'},
+          {loader: 'css-loader'},
+        ],
+      },
+      {
+        test: /\.(png|jpg|gif|svg|jpeg|ico)$/,
+        include: [sourcePath, assetsPath],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: './images/[name].[hash].[ext]',
+          },
+        }],
+      },
+      { test: /\.(woff|woff2|eot|ttf)$/, loader: 'url-loader?limit=100000' }
     ]
   },
 };
