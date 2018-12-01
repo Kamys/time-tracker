@@ -1,9 +1,18 @@
 const electron = require('electron');
 const {app, BrowserWindow, ipcMain} = electron;
 const path = require('path');
-const startTrackActivities = require('./startTrackActivities');
+const trackActivities = require('./trackActivities');
+const storage = require('./storage');
+
 
 let win
+
+const destructionApp = () => {
+  win = null
+  const activities = trackActivities.getActivities();
+  trackActivities.destruction();
+  storage.activities.set(activities);
+}
 
 const createWindow = () => {
   const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
@@ -16,12 +25,12 @@ const createWindow = () => {
   // win.loadFile(path.join(__dirname, '../renderer/index.html'))
   win.loadURL('http://localhost:8000/')
 
-  win.on('closed', () => {
-    win = null
-  })
+  trackActivities.setActivities(storage.activities.get())
+
+  win.on('closed', destructionApp)
 
   win.webContents.once('dom-ready', () => {
-    startTrackActivities(activities => {
+    trackActivities.subscribe(activities => {
       win.webContents.send('update-activities', activities);
     })
   })

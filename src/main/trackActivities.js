@@ -1,6 +1,7 @@
 const activeWin = require('active-win');
 
 let activities = [];
+let interval = null;
 const intervalTime = 1;
 
 const updateActivity = (newActivity, activities) => {
@@ -31,8 +32,28 @@ const getCurrentActivities = async (callback) => {
   callback(activities);
 }
 
-const startTrackActivities = (callback) => {
-  setInterval(getCurrentActivities, intervalTime * 1000, callback);
+const subscribe = (callback) => {
+  if (interval) {
+    destruction();
+  }
+  interval = setInterval(getCurrentActivities, intervalTime * 1000, callback);
 }
 
-module.exports = startTrackActivities;
+const setActivities = (newActivities) => {
+  activities = newActivities;
+}
+
+const getActivities = () => {
+  return activities;
+}
+
+const destruction = () => {
+  clearInterval(interval)
+}
+
+module.exports = {
+  setActivities,
+  subscribe,
+  getActivities,
+  destruction,
+};
