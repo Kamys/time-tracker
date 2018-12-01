@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack-dev-server --mode=development",
+    "dev": "webpack-dev-server --mode=development",
+    "dev-electron": "npx electron ./src/main/index.js",
     "build": "webpack"
   },
   "license": "ISC",
@@ -14,7 +15,6 @@
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^1.0.1",
     "electron": "^3.0.10",
-    "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",

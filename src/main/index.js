@@ -5,7 +5,8 @@ let win
 
 const createWindow = () => {
   win = new BrowserWindow({width: 800, height: 600})
-  win.loadFile(path.join(__dirname, '../renderer/index.html'))
+  // win.loadFile(path.join(__dirname, '../renderer/index.html'))
+  win.loadURL('http://localhost:8000/')
 
   win.on('closed', () => {
     win = null
