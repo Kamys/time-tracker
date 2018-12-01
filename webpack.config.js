@@ -51,6 +51,16 @@ module.exports = {
           {loader: 'css-loader'},
         ],
       },
+      {
+        test: /\.(png|jpg|gif|svg|jpeg|ico)$/,
+        include: [sourcePath, assetsPath],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: './images/[name].[hash].[ext]',
+          },
+        }],
+      },
       { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
     ]
   },

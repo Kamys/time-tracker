@@ -26,6 +26,8 @@
   },
   "dependencies": {
     "active-win": "^4.0.0",
+    "file-loader": "^2.0.0",
+    "fs": "0.0.1-security",
     "history": "^4.7.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
