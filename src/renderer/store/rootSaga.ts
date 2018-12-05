@@ -1,8 +1,9 @@
 import { fork } from 'redux-saga/effects';
+import groups from 'renderer/page/Groups/saga';
 
 function* rootSaga() {
   yield [
-    /*...folders.map(fork),*/
+    ...groups.map(fork),
   ];
 }
 

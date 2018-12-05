@@ -4,6 +4,7 @@ import { Component } from 'react';
 import Tabs from "renderer/components/Tabs";
 import TableActivity from "renderer/components/TableActivity";
 import Groups from "renderer/page/Groups";
+import CreateGroup from "renderer/modals/CreateGroup";
 import { TypeTabs } from './constants';
 
 
@@ -42,6 +43,7 @@ class Application extends Component<IProps, IState> {
                     activeTabs === TypeTabs.Groups &&
                     <Groups />
                 }
+                <CreateGroup />
             </div>
         );
     }

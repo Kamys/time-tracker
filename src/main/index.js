@@ -3,6 +3,7 @@ const {app, BrowserWindow, ipcMain} = electron;
 const path = require('path');
 const trackActivities = require('./trackActivities');
 const storage = require('./storage');
+const loadDevTool = require('electron-load-devtool');
 
 
 let win
@@ -34,6 +35,9 @@ const createWindow = () => {
       win.webContents.send('update-activities', activities);
     })
   })
+
+  loadDevTool(loadDevTool.REDUX_DEVTOOLS);
+  loadDevTool(loadDevTool.REACT_DEVELOPER_TOOLS);
 }
 
 app.on('ready', createWindow)

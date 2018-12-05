@@ -15,6 +15,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^1.0.1",
     "electron": "^3.0.10",
+    "electron-load-devtool": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
@@ -36,8 +37,10 @@
     "react-router-redux": "^4.0.8",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
+    "redux-modal": "^2.0.4",
     "redux-saga": "^0.16.2",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.83.0"
+    "semantic-ui-react": "^0.83.0",
+    "redux-act": "latest"
   }
 }

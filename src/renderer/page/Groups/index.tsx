@@ -1,9 +1,11 @@
-import { Component, Fragment } from 'react';
 import * as React from 'react';
-import { Button, Card } from 'semantic-ui-react'
+import { Component, Fragment } from 'react';
+import { Card } from 'semantic-ui-react'
 
 import FloatButton from 'renderer/components/FloatButton';
 import './index.css'
+import { GlobalAction } from "renderer/store/globalActions";
+import { ModalName } from "renderer/modals/constants";
 
 export interface IState {
 
@@ -29,6 +31,10 @@ class Groups extends Component<IProps, IState> {
 
     state: IState = {};
 
+    onOpenGroupForm = () => {
+        GlobalAction.showModal(ModalName.FormGroup);
+    }
+
     render() {
         return (
             <Fragment>
@@ -48,7 +54,7 @@ class Groups extends Component<IProps, IState> {
                         ))
                     }
                 </Card.Group>
-                <FloatButton text='+'/>
+                <FloatButton text='+' onClick={this.onOpenGroupForm} />
             </Fragment>
         );
     }

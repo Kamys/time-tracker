@@ -6,14 +6,16 @@ import './index.css'
 export interface IProps {
     text?: string;
     icon?: SemanticShorthandItem<IconProps>;
+    onClick: () => void;
 }
 
-const FloatButton = ({text, icon}: IProps) => (
+const FloatButton = ({text, icon, onClick}: IProps) => (
     <Button
         className='floatPosition floatButtonShadows'
         color='teal'
         circular
         icon={icon}
+        onClick={onClick}
     >
         <div className='floatText'>{text}</div>
     </Button>

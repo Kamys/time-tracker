@@ -26,7 +26,6 @@ class TableActivity extends Component<IProps, IState> {
     componentDidMount() {
         ipcRenderer.send('dom-ready');
         ipcRenderer.on ('update-activities', (event, activities) => {
-            console.log('activities: ', activities);
             this.setState({
                 activities,
             })
