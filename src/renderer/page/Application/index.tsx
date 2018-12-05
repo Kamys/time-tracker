@@ -3,6 +3,7 @@ import { Component } from 'react';
 
 import Tabs from "renderer/components/Tabs";
 import TableActivity from "renderer/components/TableActivity";
+import Groups from "renderer/page/Groups";
 import { TypeTabs } from './constants';
 
 
@@ -16,7 +17,7 @@ export interface IProps {
 
 class Application extends Component<IProps, IState> {
 
-    state: IState = {activeTabs: TypeTabs.Activities}
+    state: IState = {activeTabs: TypeTabs.Groups}
 
     onSelectTab = (tab: TypeTabs) => () => {
         this.setState({activeTabs: tab});
@@ -36,6 +37,10 @@ class Application extends Component<IProps, IState> {
                 {
                     activeTabs === TypeTabs.Activities &&
                     <TableActivity />
+                }
+                {
+                    activeTabs === TypeTabs.Groups &&
+                    <Groups />
                 }
             </div>
         );

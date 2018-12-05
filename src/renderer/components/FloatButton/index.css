@@ -1,0 +1,20 @@
+.ui.button.floatPosition {
+  position: fixed;
+  width: 55px;
+  height: 55px;
+
+  bottom: 20px;
+  right: 20px;
+  padding: inherit;
+}
+
+.floatText {
+  line-height: 55px;
+  font-size: 38px;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+}
+
+.ui.button.floatPosition {
+  box-shadow: 2px 2px 3px #999;
+}

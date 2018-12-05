@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+}
+
+.groupImage {
+  height: 100%;
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #0000007a;
+  padding: 15px;
+  border-radius: 10px;
+}
