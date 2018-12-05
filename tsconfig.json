@@ -15,11 +15,15 @@
       "es2017",
       "dom"
     ],
+    "baseUrl": "src",
+    "paths": {
+      "renderer/*": [ "renderer/*" ],
+      "main/*": [ "main/*" ]
+    },
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "baseUrl": "./",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

@@ -1,28 +1,35 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const outPath = path.join(__dirname, './build');
 const isProduction = process.env.NODE_ENV === 'production';
-const sourcePath = path.join(__dirname, './src');
-const assetsPath = path.join(__dirname, './assets');
+
+const paths = {
+  out: path.join(__dirname, './build'),
+  source: path.join(__dirname, './src'),
+  assets: path.join(__dirname, './assets'),
+  renderer: path.join(__dirname, './src/renderer'),
+  main: path.join(__dirname, './src/main'),
+}
 
 module.exports = {
-  context: sourcePath,
+  context: paths.source,
   entry: './renderer/index.tsx',
   output: {
-    path: outPath,
+    path: paths.out,
     filename: 'bundle.js',
   },
   devtool: isProduction ? 'none' : 'source-map',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    modules: ['node_modules', sourcePath],
+    modules: ['node_modules', paths.source],
     alias: {
-      src: sourcePath,
+      src: paths.source,
+      renderer: paths.renderer,
+      main: paths.main,
     },
   },
   devServer: {
-    contentBase: outPath,
+    contentBase: paths.out,
     port: 8000
   },
   plugins: [
@@ -53,7 +60,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg|jpeg|ico)$/,
-        include: [sourcePath, assetsPath],
+        include: [paths.source, paths.assets],
         use: [{
           loader: 'file-loader',
           options: {

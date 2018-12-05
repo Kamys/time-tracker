@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { Menu } from "semantic-ui-react";
+
+import Tabs from "renderer/components/Tabs";
+import TableActivity from "renderer/components/TableActivity";
 import { TypeTabs } from './constants';
-import TableActivity from "../../components/TableActivity";
+
 
 export interface IState {
     activeTabs: TypeTabs
@@ -26,24 +28,15 @@ class Application extends Component<IProps, IState> {
         let tabs = [TypeTabs.Activities, TypeTabs.Groups];
         return (
             <div  style={{margin: 10, marginTop: 0}}>
-                <Menu pointing>
-                    {
-                        tabs.map(tab => (
-                            <Menu.Item
-                                key={tab}
-                                name={tab}
-                                active={activeTabs === tab}
-                                onClick={this.onSelectTab(tab)}
-                            />
-                        ))
-                    }
-                </Menu>
-                <div>
-                    {
-                        activeTabs === TypeTabs.Activities &&
-                        <TableActivity />
-                    }
-                </div>
+                <Tabs
+                    tabs={tabs}
+                    activeTabs={activeTabs}
+                    onSelectTab={this.onSelectTab}
+                />
+                {
+                    activeTabs === TypeTabs.Activities &&
+                    <TableActivity />
+                }
             </div>
         );
     }
