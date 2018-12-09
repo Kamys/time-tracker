@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Button, IconProps } from "semantic-ui-react";
-import { SemanticShorthandItem } from "semantic-ui-react/dist/commonjs/generic";
+import { Button, IconProps } from 'semantic-ui-react';
+import { SemanticShorthandItem } from 'semantic-ui-react/dist/commonjs/generic';
 import './index.css'
 
-export interface IProps {
+interface IProps {
     text?: string;
     icon?: SemanticShorthandItem<IconProps>;
     onClick: () => void;

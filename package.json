@@ -30,17 +30,21 @@
     "file-loader": "^2.0.0",
     "fs": "0.0.1-security",
     "history": "^4.7.2",
+    "install": "^0.12.2",
+    "lodash": "latest",
+    "npm": "^6.4.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "react-router": "^4.3.1",
     "react-router-redux": "^4.0.8",
     "redux": "^4.0.1",
+    "redux-act": "latest",
     "redux-devtools-extension": "^2.13.7",
     "redux-modal": "^2.0.4",
     "redux-saga": "^0.16.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
-    "redux-act": "latest"
+    "uniqid": "^5.0.3"
   }
 }

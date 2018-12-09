@@ -1,33 +1,26 @@
 import * as React from 'react';
 import { Component, Fragment } from 'react';
+import { connect } from 'react-redux'
 import { Card } from 'semantic-ui-react'
 
 import FloatButton from 'renderer/components/FloatButton';
-import './index.css'
 import { GlobalAction } from "renderer/store/globalActions";
 import { ModalName } from "renderer/modals/constants";
 
-export interface IState {
+import './index.css'
+import { IRootState } from 'renderer/store/rootReducer';
+
+interface IState {
 
 }
 
-export interface IProps {
+interface IProps {
 
 }
-
-const imageWork = 'https://images.pexels.com/photos/1068523/pexels-photo-1068523.jpeg?auto=compress&cs=tinysrgb&h=350'
-const imageProcrastination = 'https://o-prirode.ru/wp-content/uploads/2018/05/lenivets-trekhpaliy-e1526833927933.jpg'
-const imageSelfDevelopment = 'https://www.brisbane.qld.gov.au/sites/default/files/trumba/events/dgdzhbdbnghqvvogxw8biu7o_16.jpg'
-
-const groups = [
-    {name: 'Work', image: imageWork},
-    {name: 'Self-development', image: imageSelfDevelopment},
-    {name: 'Procrastination', image: imageProcrastination},
-]
 
 const styleImage = src => ({backgroundImage: `url("${src}")`})
 
-class Groups extends Component<IProps, IState> {
+class Groups extends Component<IProps & injectProps, IState> {
 
     state: IState = {};
 
@@ -36,12 +29,15 @@ class Groups extends Component<IProps, IState> {
     }
 
     render() {
+
+        const {groups} = this.props;
+
         return (
             <Fragment>
                 <Card.Group stackable itemsPerRow={4}>
                     {
                         groups.map(group => (
-                            <Card>
+                            <Card key={group.id}>
                                 <div
                                     className='groupImage'
                                     style={styleImage(group.image)}
@@ -60,4 +56,14 @@ class Groups extends Component<IProps, IState> {
     }
 }
 
-export default Groups;
+const mapStateToProps = (state: IRootState) => ({
+    groups: state.entries.groups,
+})
+
+type injectProps = ReturnType<typeof mapStateToProps>;
+
+const dispatchToProps = (dispatch) => ({
+
+})
+
+export default connect<injectProps, IProps>(mapStateToProps, dispatchToProps)(Groups)

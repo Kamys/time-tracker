@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Menu } from "semantic-ui-react";
-import { TypeTabs } from "../page/Application/constants";
+import { TypeTabs } from "../application/constants";
 
 interface IProps {
     tabs: TypeTabs[];

@@ -1,5 +1,5 @@
 import { fork } from 'redux-saga/effects';
-import groups from 'renderer/page/Groups/saga';
+import groups from 'renderer/groups/saga';
 
 function* rootSaga() {
   yield [

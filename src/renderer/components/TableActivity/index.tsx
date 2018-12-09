@@ -9,11 +9,11 @@ interface IActivity {
     group: string;
 }
 
-export interface IState {
+interface IState {
     activities: IActivity[]
 }
 
-export interface IProps {
+interface IProps {
 
 }
 

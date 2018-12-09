@@ -3,16 +3,16 @@ import { Component } from 'react';
 
 import Tabs from "renderer/components/Tabs";
 import TableActivity from "renderer/components/TableActivity";
-import Groups from "renderer/page/Groups";
-import CreateGroup from "renderer/modals/CreateGroup";
+import Groups from "renderer/groups/components/Page";
 import { TypeTabs } from './constants';
+import FormGroup from 'renderer/groups/components/FormGroup';
 
 
-export interface IState {
+interface IState {
     activeTabs: TypeTabs
 }
 
-export interface IProps {
+interface IProps {
 
 }
 
@@ -43,7 +43,7 @@ class Application extends Component<IProps, IState> {
                     activeTabs === TypeTabs.Groups &&
                     <Groups />
                 }
-                <CreateGroup />
+                <FormGroup />
             </div>
         );
     }

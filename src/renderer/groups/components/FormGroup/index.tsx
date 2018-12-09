@@ -2,13 +2,15 @@ import { Component } from 'react';
 import * as React from 'react';
 import { Button, Image, Modal, Form, Grid } from 'semantic-ui-react';
 import { connectModal, InjectedProps } from 'redux-modal';
+import * as uniqid from 'uniqid';
 
-import { ModalName } from './constants';
 import { GlobalAction } from 'renderer/store/globalActions';
+import { imageWork } from 'renderer/groups/constants';
+import { ModalName } from 'renderer/modals/constants';
 
 import './index.css';
 
-export interface IState {
+interface IState {
     name: string;
     description: string;
 }
@@ -17,7 +19,7 @@ export interface IProps extends InjectedProps {
     text: number
 }
 
-class CreateGroup extends Component<IProps, IState> {
+class FormGroup extends Component<IProps, IState> {
 
     state: IState = {
         name: '',
@@ -26,7 +28,7 @@ class CreateGroup extends Component<IProps, IState> {
 
     onCreateGroup = () => {
         const {name, description} = this.state
-        GlobalAction.group.create.REQUEST({name, description})
+        GlobalAction.group.create({id: uniqid(), name, description, image: imageWork})
     }
 
     onChange = (name: keyof IState) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,4 +84,4 @@ class CreateGroup extends Component<IProps, IState> {
     }
 }
 
-export default connectModal({name: ModalName.FormGroup})(CreateGroup)
+export default connectModal({name: ModalName.FormGroup})(FormGroup)
