@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Table } from 'semantic-ui-react'
-import * as moment from 'moment'
-import * as _ from 'lodash';
+import { formatSecond, groupActivities } from 'renderer/components/TableActivity/utils';
+
 
 const {ipcRenderer} = (window as any).require('electron');
 
@@ -20,33 +20,6 @@ interface IState {
 interface IProps {
 
 }
-
-const formatSecond = second => {
-    return moment()
-        .startOf('day')
-        .seconds(second)
-        .format('H:mm:ss');
-}
-
-const concatActivities = activities => {
-    return activities.reduce((result, activity) => {
-        return {...result, secondsSpent: result.secondsSpent + activity.secondsSpent}
-    })
-}
-
-//TODO: rewrite it on lodash/fp
-const groupActivities = activities => {
-    console.log('groupActivities: ', activities);
-    const group = _.groupBy(activities, 'title');
-    let transform = Object.entries(group).reduce((result, [key, groupActivities]) => {
-        let concatActivities1 = concatActivities(groupActivities);
-        console.log('concatActivities1: ', concatActivities1);
-        return {...result, [key]: concatActivities1}
-    }, {});
-    console.log('transform: ', transform);
-    return _.values(transform)
-}
-
 
 class TableActivity extends Component<IProps, IState> {
 
