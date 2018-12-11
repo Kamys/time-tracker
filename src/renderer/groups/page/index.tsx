@@ -57,13 +57,13 @@ class Groups extends Component<IProps & injectProps, IState> {
 }
 
 const mapStateToProps = (state: IRootState) => ({
-    groups: state.entries.groups,
+    groups: state.entries.group,
 })
-
-type injectProps = ReturnType<typeof mapStateToProps>;
 
 const dispatchToProps = (dispatch) => ({
 
 })
+
+type injectProps = ReturnType<typeof mapStateToProps>;
 
 export default connect<injectProps, IProps>(mapStateToProps, dispatchToProps)(Groups)

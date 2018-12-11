@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Component } from 'react';
 
 import Tabs from "renderer/components/Tabs";
-import TableActivity from "renderer/components/TableActivity";
-import Groups from "renderer/groups/components/Page";
+import Groups from "renderer/groups/page";
+import FormGroup from 'renderer/groups/page/FormGroup';
+import PageActivity from 'renderer/activity/page';
 import { TypeTabs } from './constants';
-import FormGroup from 'renderer/groups/components/FormGroup';
 
 
 interface IState {
@@ -37,7 +37,7 @@ class Application extends Component<IProps, IState> {
                 />
                 {
                     activeTabs === TypeTabs.Activities &&
-                    <TableActivity />
+                    <PageActivity />
                 }
                 {
                     activeTabs === TypeTabs.Groups &&

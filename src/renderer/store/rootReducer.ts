@@ -3,12 +3,10 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as modal } from 'redux-modal'
 
 import entries from 'renderer/entries/reduce'
-import { IGroup } from 'renderer/groups/model';
+import { IEntriesState } from 'renderer/entries/model';
 
 export interface IRootState {
-    entries: {
-        groups: IGroup[],
-    }
+    entries: IEntriesState;
 }
 
 const appReducers = combineReducers({

@@ -1,9 +1,9 @@
 import { IGroup } from './model';
-import { ENTRY_NAME_GROUP } from 'renderer/groups/constants';
 import { ActionsEntries } from 'renderer/entries/actions';
+import { EntriesType } from 'renderer/entries/model';
 
 export const ActionsGroup = {
-    create: (entry: IGroup) => ActionsEntries.create.REQUEST({entryName: ENTRY_NAME_GROUP, entry})
+    create: (entry: IGroup) => ActionsEntries.create.REQUEST({entryName: EntriesType.group, entry})
 }
 
 export type TypeActionsGroup = typeof ActionsGroup;

@@ -1,43 +1,22 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Table } from 'semantic-ui-react'
-import { formatSecond, groupActivities } from 'renderer/components/TableActivity/utils';
 
+import { formatSecond } from 'renderer/activity/utils';
+import { IActivity } from 'renderer/activity/model';
 
-const {ipcRenderer} = (window as any).require('electron');
-
-interface IActivity {
-    title: string;
-    date: string;
-    secondsSpent: number;
-    group: string;
-}
 
 interface IState {
-    activities: IActivity[]
 }
 
 interface IProps {
-
+    activities: IActivity[];
 }
 
 class TableActivity extends Component<IProps, IState> {
 
-    state: IState = {
-        activities: [],
-    };
-
-    componentDidMount() {
-        ipcRenderer.send('dom-ready');
-        ipcRenderer.on('update-activities', (event, activities) => {
-            this.setState({
-                activities: groupActivities(activities),
-            })
-        });
-    }
-
     render() {
-        const {activities} = this.state;
+        const {activities} = this.props;
 
         return (
             <Table celled>
