@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "webpack-dev-server --mode=development",
     "dev-electron": "npx electron ./src/main/index.js",
-    "build": "webpack"
+    "build": "rm -rf build; NODE_ENV=production webpack",
+    "build-electron": "npm run build; cd build; npx electron-builder -wlm"
   },
   "license": "ISC",
   "devDependencies": {
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "active-win": "^4.0.0",
+    "electron-builder": "^20.38.2",
     "file-loader": "^2.0.0",
     "fs": "0.0.1-security",
     "history": "^4.7.2",
@@ -47,5 +49,16 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
     "uniqid": "^5.0.3"
+  },
+  "build": {
+    "productName": "Time Tracker",
+    "appId": "github.com.kamys.time-tracker",
+    "linux": {
+      "target": "deb",
+      "category": "Office"
+    },
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
   }
 }
