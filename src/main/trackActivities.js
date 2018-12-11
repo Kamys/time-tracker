@@ -1,29 +1,19 @@
 const activeWin = require('active-win');
+const moment = require('moment');
 
 let activities = [];
 let interval = null;
 const intervalTime = 1;
 
 const updateActivity = (newActivity, activities) => {
-  const currentActivity = activities.find(activity => activity.title === newActivity.title);
-
-  if (currentActivity) {
-    return [
-      {
-        ...currentActivity,
-        time: currentActivity.time + intervalTime,
-      },
-      ...activities.filter(activity => activity.title !== newActivity.title),
-    ]
-  } else {
-    return [
-      ...activities,
-      {
-        title: newActivity.title,
-        time: intervalTime,
-      }
-    ]
-  }
+  return [
+    {
+      date: moment().format('D.MM.GGGG'),
+      title: newActivity.title,
+      secondsSpent: intervalTime,
+    },
+    ...activities,
+  ]
 }
 
 const getCurrentActivities = async (callback) => {
