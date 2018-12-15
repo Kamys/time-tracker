@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "webpack-dev-server --mode=development",
-    "dev-electron": "npx electron ./src/main/index.js",
-    "build": "rm -rf build; NODE_ENV=production webpack",
-    "build-electron": "npm run build; cd build; npx electron-builder -wlm"
+    "dev": "webpack-dev-server --mode=development --env.render",
+    "dev-electron": "webpack --mode=development --env.main=1; npx electron ./build/main.js",
+    "build": "npm run clear; NODE_ENV=production webpack --mode=production",
+    "build-electron": "npm run build; cd build; npx electron-builder -wlm",
+    "clear": "rm -rf build;"
   },
   "license": "ISC",
   "devDependencies": {
