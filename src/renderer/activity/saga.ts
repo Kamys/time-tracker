@@ -3,23 +3,21 @@ import { ActionsEntries } from 'renderer/entries/actions';
 import { Action } from 'redux-act';
 import { EntriesType } from 'renderer/entries/model';
 import { eventChannel } from 'redux-saga';
+import { sendDomReady, subscribeUpdateActivities } from 'renderer/electron/events';
 
-const {ipcRenderer} = (window as any).require('electron');
 
-
-function requestActivities() {
-    return eventChannel(emitter => {
-            ipcRenderer.on('update-activities', (event, activities) => {
-                emitter(activities)
-            });
-            return () => {};
-        }
-    )
-}
+const requestActivities = () => eventChannel(emitter => {
+        subscribeUpdateActivities((event, activities) => {
+            emitter(activities)
+        })
+        return () => {
+        };
+    }
+)
 
 function* loading(action: Action<{ entryName: EntriesType }>) {
     if (action.payload.entryName === EntriesType.activity) {
-        ipcRenderer.send('dom-ready');
+        sendDomReady()
         const chanelActivities = yield call(requestActivities)
         while (true) {
             let activities = yield take(chanelActivities)
