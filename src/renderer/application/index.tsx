@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import Tabs from "renderer/components/Tabs";
-import Groups from "renderer/groups/page";
-import FormGroup from 'renderer/groups/page/FormGroup';
+import PageGroups from 'renderer/groups/page';
 import PageActivity from 'renderer/activity/page';
-import { TypeTabs } from './constants';
+import PageStatistics from 'renderer/statistics/page';
+import Tabs from 'renderer/components/Tabs';
+import FormGroup from 'renderer/groups/page/FormGroup';
 import { GlobalAction } from 'renderer/store/globalActions';
+import { TypeTabs } from './constants';
 
 
 interface IState {
@@ -19,7 +20,7 @@ interface IProps {
 
 class Application extends Component<IProps, IState> {
 
-    state: IState = {activeTabs: TypeTabs.Groups}
+    state: IState = {activeTabs: TypeTabs.Statistics}
 
     componentDidMount() {
         GlobalAction.electron.loadingStore.REQUEST()
@@ -32,7 +33,7 @@ class Application extends Component<IProps, IState> {
     render() {
         const {activeTabs} = this.state
 
-        let tabs = [TypeTabs.Activities, TypeTabs.Groups];
+        const tabs = [TypeTabs.Activities, TypeTabs.Groups, TypeTabs.Statistics];
         return (
             <div  style={{margin: 10, marginTop: 0}}>
                 <Tabs
@@ -46,7 +47,11 @@ class Application extends Component<IProps, IState> {
                 }
                 {
                     activeTabs === TypeTabs.Groups &&
-                    <Groups />
+                    <PageGroups />
+                }
+                {
+                    activeTabs === TypeTabs.Statistics &&
+                    <PageStatistics />
                 }
                 <FormGroup />
             </div>

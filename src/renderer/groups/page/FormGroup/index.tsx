@@ -13,6 +13,7 @@ import './index.css';
 interface IState {
     name: string;
     description: string;
+    regExp: string;
 }
 
 export interface IProps extends InjectedProps {
@@ -24,11 +25,12 @@ class FormGroup extends Component<IProps, IState> {
     state: IState = {
         name: '',
         description: '',
+        regExp: '',
     };
 
     onCreateGroup = () => {
-        const {name, description} = this.state
-        GlobalAction.group.create({id: uniqid(), name, description, image: imageWork})
+        const {name, description, regExp} = this.state
+        GlobalAction.group.create({id: uniqid(), name, description, regExp, image: imageWork})
     }
 
     onChange = (name: keyof IState) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,16 +60,25 @@ class FormGroup extends Component<IProps, IState> {
                                 </Grid.Column>
                                 <Grid.Column>
                                     <Form.Input
+                                        className='fields'
                                         fluid
                                         label='Name'
                                         placeholder='Work, Social network, News ...'
                                         onChange={this.onChange('name')}
                                     />
                                     <Form.Input
+                                        className='fields'
                                         fluid
                                         label='Description (optional)'
                                         placeholder={`It's my best group :)`}
                                         onChange={this.onChange('description')}
+                                    />
+                                    <Form.Input
+                                        className='fields'
+                                        fluid
+                                        label='Regular expressions (Used for connect  group with actions)'
+                                        placeholder={`RegExp`}
+                                        onChange={this.onChange('regExp')}
                                     />
                                 </Grid.Column>
                             </Grid.Row>

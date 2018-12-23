@@ -20,7 +20,7 @@ interface IProps {
 
 const styleImage = src => ({backgroundImage: `url("${src}")`})
 
-class Groups extends Component<IProps & injectProps, IState> {
+class PageGroups extends Component<IProps & injectProps, IState> {
 
     state: IState = {};
 
@@ -66,4 +66,4 @@ const dispatchToProps = (dispatch) => ({
 
 type injectProps = ReturnType<typeof mapStateToProps>;
 
-export default connect<injectProps, IProps>(mapStateToProps, dispatchToProps)(Groups)
+export default connect<injectProps, IProps>(mapStateToProps, dispatchToProps)(PageGroups)
