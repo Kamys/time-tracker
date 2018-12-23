@@ -28,10 +28,9 @@ function* loading(action: Action<{ entryName: EntriesType }>) {
     }
 }
 
-// TODO: fix REQUEST(null).type
 function* watcher() {
     yield all([
-        takeEvery(ActionsEntries.loading.REQUEST(null).type, loading),
+        takeEvery(ActionsEntries.loading.REQUEST.toString(), loading),
     ]);
 }
 
