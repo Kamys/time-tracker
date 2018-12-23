@@ -1,24 +1,41 @@
-import * as activeWin from 'active-win/lib/linux';
 import * as moment from 'moment';
 
-let activities = [];
+import * as activeWin from 'active-win/lib/linux';
+import { IActivity } from 'renderer/activity/model';
+import { findReplace } from 'main/utils';
+
+let activities: IActivity[] = [];
 let interval = null;
 const intervalTime = 1;
 
-const updateActivity = (newActivity, activities) => {
-    return [
+const updateActivity = (activities: IActivity[], newActivity: IActivity): IActivity[] => {
+    const todayDate = moment().format('D.MM.GGGG');
+
+    const isNewActivity = (activity: IActivity) => {
+        return activity.date === todayDate && newActivity.title === activity.title
+    }
+
+    const notFound = (oldActivities) => [
         {
-            date: moment().format('D.MM.GGGG'),
+            date: todayDate,
             title: newActivity.title,
             secondsSpent: intervalTime,
+            group: '',
         },
-        ...activities,
-    ]
+        ...oldActivities,
+    ];
+
+    const replacement = (oldActivity) => ({
+        ...oldActivity,
+        secondsSpent: oldActivity.secondsSpent + intervalTime,
+    });
+
+    return findReplace(activities, isNewActivity, replacement, notFound)
 }
 
 const getCurrentActivities = async (callback) => {
     const newActivity = await activeWin();
-    activities = updateActivity(newActivity, activities);
+    activities = updateActivity(activities, newActivity);
     callback(activities);
 }
 

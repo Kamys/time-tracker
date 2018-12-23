@@ -4,9 +4,10 @@
   "description": "",
   "scripts": {
     "dev": "webpack-dev-server --mode=development --env.render",
-    "dev-electron": "webpack --mode=development --env.main; npx electron ./build/main.js",
+    "build-electron": "webpack --mode=development --env.main;",
+    "dev-electron": "npm run build-electron; npx electron ./build/main.js",
     "build": "npm run clear; NODE_ENV=production webpack --mode=production",
-    "build-electron": "npm run build; cd build; npx electron-builder -wlm",
+    "build-electron-app": "npm run build; cd build; npx electron-builder -wlm",
     "clear": "rm -rf build;"
   },
   "license": "ISC",
