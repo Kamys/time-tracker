@@ -11,9 +11,7 @@ let forceQuit = false;
 
 const destructionApp = () => {
     win = null
-    const activities = trackActivities.getActivities();
     trackActivities.destruction();
-    storage.activities.set(activities);
 }
 
 const createTray = () => {
@@ -46,7 +44,8 @@ const createWindow = () => {
     // win.loadFile(path.join(__dirname, '../renderer/index.html'))
     win.loadURL('http://localhost:8000/')
 
-    trackActivities.setActivities(storage.activities.get())
+    let newActivities = storage.app.get().entries.activity;
+    trackActivities.setActivities(newActivities)
 
     win.on('closed', destructionApp)
     win.on('close', (event) => {
@@ -79,7 +78,7 @@ const createListeners = () => {
 
     ipcMain.on('load-store-request', () => {
         const store = storage.app.get();
-        win.webContents.send('load-store', store || {});
+        win.webContents.send('load-store', store);
     })
 
     ipcMain.on('close-app', () => {

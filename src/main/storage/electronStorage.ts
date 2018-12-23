@@ -36,7 +36,12 @@ function parseDataFile(filePath, defaults) {
 const store = new Store({
     configName: 'mainStore',
     defaults: {
-        [STORAGE_KEY.ACTIVITIES]: [],
+        [STORAGE_KEY.APP]: {
+            entries: {
+                activity: [],
+                group: [],
+            }
+        },
     }
 });
 
