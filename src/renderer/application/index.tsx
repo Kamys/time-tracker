@@ -6,6 +6,7 @@ import Groups from "renderer/groups/page";
 import FormGroup from 'renderer/groups/page/FormGroup';
 import PageActivity from 'renderer/activity/page';
 import { TypeTabs } from './constants';
+import { GlobalAction } from 'renderer/store/globalActions';
 
 
 interface IState {
@@ -19,6 +20,10 @@ interface IProps {
 class Application extends Component<IProps, IState> {
 
     state: IState = {activeTabs: TypeTabs.Groups}
+
+    componentDidMount() {
+        GlobalAction.electron.loadingStore.REQUEST()
+    }
 
     onSelectTab = (tab: TypeTabs) => () => {
         this.setState({activeTabs: tab});

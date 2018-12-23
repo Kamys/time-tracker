@@ -3,7 +3,7 @@ import { ActionsEntries } from 'renderer/entries/actions';
 import { Action } from 'redux-act';
 import { EntriesType } from 'renderer/entries/model';
 import { eventChannel } from 'redux-saga';
-import { sendDomReady, subscribeUpdateActivities } from 'renderer/electron/events';
+import { subscribeUpdateActivities } from 'renderer/electron/events';
 
 
 const requestActivities = () => eventChannel(emitter => {
@@ -17,7 +17,6 @@ const requestActivities = () => eventChannel(emitter => {
 
 function* loading(action: Action<{ entryName: EntriesType }>) {
     if (action.payload.entryName === EntriesType.activity) {
-        sendDomReady()
         const chanelActivities = yield call(requestActivities)
         while (true) {
             let activities = yield take(chanelActivities)

@@ -1,3 +1,4 @@
 import activities from './activities';
+import app from './app';
 
-export default {activities}
+export default {activities, app}

@@ -1,5 +1,4 @@
 import * as loadDevTool from 'electron-load-devtool';
-import * as path from 'path';
 import { screen, app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron';
 
 import storage from './storage';
@@ -33,7 +32,6 @@ const createTray = () => {
     ])
 
     tray.setHighlightMode('always');
-    tray.setToolTip('This is my application.')
     tray.setContextMenu(contextMenu)
 }
 
@@ -52,15 +50,21 @@ const createWindow = () => {
 
     win.on('closed', destructionApp)
     win.on('close', (event) => {
-        if (!forceQuit) {
+        if (win) {
             event.preventDefault()
-            win.hide()
+            if (!forceQuit) {
+                win.hide()
+            } else {
+                win.webContents.send('close-app-request');
+            }
         }
     })
 
     win.webContents.once('dom-ready', () => {
         trackActivities.subscribe(activities => {
-            win.webContents.send('update-activities', activities);
+            if (win) {
+                win.webContents.send('update-activities', activities);
+            }
         })
     })
 
@@ -68,9 +72,28 @@ const createWindow = () => {
     loadDevTool(loadDevTool.REACT_DEVELOPER_TOOLS);
 }
 
+const createListeners = () => {
+    ipcMain.on('save-store', (action, store) => {
+        storage.app.set(store)
+    })
+
+    ipcMain.on('load-store-request', () => {
+        const store = storage.app.get();
+        win.webContents.send('load-store', store || {});
+    })
+
+    ipcMain.on('close-app', () => {
+        win = null;
+        if (process.platform !== 'darwin') {
+            app.quit();
+        }
+    });
+}
+
 app.on('ready', () => {
     createWindow();
     createTray();
+    createListeners()
 })
 
 app.on('window-all-closed', () => {
