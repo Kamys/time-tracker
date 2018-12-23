@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "webpack-dev-server --mode=development --env.render",
-    "dev-electron": "webpack --mode=development --env.main=1; npx electron ./build/main.js",
+    "dev-electron": "webpack --mode=development --env.main; npx electron ./build/main.js",
     "build": "npm run clear; NODE_ENV=production webpack --mode=production",
     "build-electron": "npm run build; cd build; npx electron-builder -wlm",
     "clear": "rm -rf build;"
@@ -19,6 +19,7 @@
     "electron": "^3.0.10",
     "electron-load-devtool": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "img-loader": "^3.0.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "typescript": "^3.2.1",

@@ -4,9 +4,7 @@ import { screen, app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'el
 
 import storage from './storage';
 import trackActivities from './trackActivities';
-import * as icon from 'main/icon.png';
-
-console.log('icon: ', icon);
+import * as icon from 'src/assert/icon.png';
 
 let win = null;
 let tray
@@ -20,8 +18,7 @@ const destructionApp = () => {
 }
 
 const createTray = () => {
-    let trayIcon = nativeImage.createFromPath(icon);
-    trayIcon = trayIcon.resize({ width: 16, height: 16 });
+    const trayIcon = nativeImage.createFromDataURL(icon);
     tray = new Tray(trayIcon);
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -35,6 +32,7 @@ const createTray = () => {
         },
     ])
 
+    tray.setHighlightMode('always');
     tray.setToolTip('This is my application.')
     tray.setContextMenu(contextMenu)
 }

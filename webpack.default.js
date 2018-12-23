@@ -31,16 +31,6 @@ const webpackModulesRule = {
       ],
     },
     {
-      test: /\.(png|jpg|gif|svg|jpeg|ico)$/,
-      include: [paths.source, paths.assets],
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: './images/[name].[ext]',
-        },
-      }],
-    },
-    {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'
     }
   ]
@@ -61,6 +51,10 @@ const commonConfig = {
       renderer: paths.renderer,
       main: paths.main,
     },
+  },
+  node: {
+    __dirname: false,
+    __filename: false,
   },
   devServer: {
     contentBase: paths.out,
