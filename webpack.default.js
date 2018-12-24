@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -66,6 +67,9 @@ const commonConfig = {
       filename: 'index.html',
       inject: 'body',
     }),
+    new CopyWebpackPlugin([
+      {from: '../package.json', to: '../build'},
+    ]),
   ],
   module: webpackModulesRule,
 };

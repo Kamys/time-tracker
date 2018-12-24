@@ -1,5 +1,6 @@
 import * as loadDevTool from 'electron-load-devtool';
 import { screen, app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron';
+const path = require('path');
 
 import storage from './storage';
 import trackActivities from './trackActivities';
@@ -41,8 +42,8 @@ const createWindow = () => {
         title: 'Time Tracker',
         center: true,
     });
-    // win.loadFile(path.join(__dirname, '../renderer/index.html'))
-    win.loadURL('http://localhost:8000/')
+    win.loadFile(path.join(__dirname, './index.html'))
+    //win.loadURL('http://localhost:8000/')
 
     let newActivities = storage.app.get().entries.activity;
     trackActivities.setActivities(newActivities)
