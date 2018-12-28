@@ -2,10 +2,12 @@
   "compilerOptions": {
     "types": [
       "react",
-      "node"
+      "node",
+      "jest"
     ],
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "node_modules/@types/jest"
     ],
     "outDir": "./buildTs",
     "rootDir": "src",
@@ -37,8 +39,7 @@
     "experimentalDecorators": true
   },
   "include": [
-    "src",
-    "type"
+    "src"
   ],
   "exclude": [
     "node_modules",
@@ -48,6 +49,8 @@
     "webpack",
     "jest",
     "config/**/*.js",
-    "webpack.config.js"
+    "webpack.config.js",
+    "**/*.test.ts",
+    "**/__tests__/**/*"
   ]
 }
