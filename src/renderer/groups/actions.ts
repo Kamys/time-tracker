@@ -3,7 +3,7 @@ import { ActionsEntries } from 'renderer/entries/actions';
 import { EntriesType } from 'renderer/entries/model';
 
 export const ActionsGroup = {
-    create: (entry: IGroup) => ActionsEntries.create.REQUEST({entryName: EntriesType.group, entry})
+    create: (entity: IGroup) => ActionsEntries.create.REQUEST({entityName: 'group', entity})
 }
 
 export type TypeActionsGroup = typeof ActionsGroup;

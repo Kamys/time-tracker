@@ -2,12 +2,11 @@ import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux'
 
-import './index.css'
 import { IRootState } from 'renderer/store/rootReducer';
 import TableActivity from 'renderer/components/TableActivity';
 import { GlobalAction } from 'renderer/store/globalActions';
-import { groupActivities } from 'renderer/activity/utils';
-import { EntriesType } from 'renderer/entries/model';
+
+import './index.css'
 
 interface IState {
 
@@ -22,13 +21,13 @@ class Groups extends Component<IProps & injectProps, IState> {
     state: IState = {};
 
     componentDidMount() {
-        GlobalAction.entries.loading.REQUEST({entryName: EntriesType.activity})
+        GlobalAction.entries.loading.REQUEST({entityName: 'activity'})
     }
 
     render() {
         const {activities} = this.props;
         return (
-            <TableActivity activities={groupActivities(activities)} />
+            <TableActivity activities={activities} />
         );
     }
 }

@@ -1,6 +1,6 @@
-import { identity } from 'lodash';
+const defaultNotFound = list => list
 
-export const findReplace = (list: object[], predicate, replacement, notFound = identity) => {
+export const findReplace = (list: object[], predicate, replacement, notFound = defaultNotFound) => {
     const index = list.findIndex(predicate);
     const foundItem = list[index];
     if (!foundItem) {

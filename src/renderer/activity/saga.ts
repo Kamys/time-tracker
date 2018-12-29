@@ -15,12 +15,12 @@ const requestActivities = () => eventChannel(emitter => {
     }
 )
 
-function* loading(action: Action<{ entryName: EntriesType }>) {
-    if (action.payload.entryName === 'activity') {
+function* loading(action: Action<{ entityName: EntriesType }>) {
+    if (action.payload.entityName === 'activity') {
         const chanelActivities = yield call(requestActivities)
         while (true) {
             let activities = yield take(chanelActivities)
-            yield put(ActionsEntries.loading.SUCCESS({entryName: 'activity', entry: activities}))
+            yield put(ActionsEntries.loading.SUCCESS({entityName: 'activity', entity: activities}))
         }
     }
 }

@@ -5,7 +5,7 @@ import PageGroups from 'renderer/groups/page';
 import PageActivity from 'renderer/activity/page';
 import PageStatistics from 'renderer/statistics/page';
 import Tabs from 'renderer/components/Tabs';
-import FormGroup from 'renderer/groups/page/FormGroup';
+import FormGroupModal from 'renderer/groups/modals/FormGroup';
 import { GlobalAction } from 'renderer/store/globalActions';
 import { TypeTabs } from './constants';
 
@@ -35,7 +35,7 @@ class Application extends Component<IProps, IState> {
 
         const tabs = [TypeTabs.Activities, TypeTabs.Groups, TypeTabs.Statistics];
         return (
-            <div  style={{margin: 10, marginTop: 0}}>
+            <div style={{margin: 10, marginTop: 0}}>
                 <Tabs
                     tabs={tabs}
                     activeTabs={activeTabs}
@@ -53,7 +53,7 @@ class Application extends Component<IProps, IState> {
                     activeTabs === TypeTabs.Statistics &&
                     <PageStatistics />
                 }
-                <FormGroup />
+                <FormGroupModal />
             </div>
         );
     }

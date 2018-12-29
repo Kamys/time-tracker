@@ -17,40 +17,45 @@ interface IProps {
 const styleImage = src => ({backgroundImage: `url("${src}")`})
 
 const PageGroups = ({groups}: IProps & injectProps) => (
-        <Fragment>
-            <Card.Group stackable itemsPerRow={4}>
-                {
-                    groups.map(group => (
-                        <Card
-                            key={group.id}
-                            onClick={() => GlobalAction.showModal(ModalName.FormGroup)}
+    <Fragment>
+        <Card.Group stackable itemsPerRow={4}>
+            {
+                groups.map(group => (
+                    <Card
+                        key={group.id}
+                        onClick={() => GlobalAction.showModal(ModalName.FormGroup, {
+                            entityId: group.id,
+                            mode: 'Edit',
+                            entityName: 'group'
+                        })}
+                    >
+                        <div
+                            className='groupImage'
+                            style={styleImage(group.image)}
                         >
-                            <div
-                                className='groupImage'
-                                style={styleImage(group.image)}
-                            >
-                                <div className='text'>
-                                    {group.name}
-                                </div>
+                            <div className='text'>
+                                {group.name}
                             </div>
-                        </Card>
-                    ))
-                }
-            </Card.Group>
-            <FloatButton
-                text='+'
-                onClick={() => GlobalAction.showModal(ModalName.FormGroup)}
-            />
-        </Fragment>
-    );
+                        </div>
+                    </Card>
+                ))
+            }
+        </Card.Group>
+        <FloatButton
+            text='+'
+            onClick={() => GlobalAction.showModal(ModalName.FormGroup, {
+                mode: 'Create',
+                entityName: 'group'
+            })}
+        />
+    </Fragment>
+);
 
 const mapStateToProps = (state: IRootState) => ({
     groups: state.entries.group,
 })
 
-const dispatchToProps = (dispatch) => ({
-
-})
+const dispatchToProps = (dispatch) => ({})
 
 type injectProps = ReturnType<typeof mapStateToProps>;
 

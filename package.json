@@ -16,6 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^23.3.10",
+    "@types/lodash": "^4.14.119",
     "@types/react": "^16.7.11",
     "@types/react-dom": "^16.0.11",
     "awesome-typescript-loader": "^5.2.1",
@@ -60,7 +61,8 @@
     "redux-saga": "^0.16.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
-    "uniqid": "^5.0.3"
+    "uniqid": "^5.0.3",
+    "reselect": "latest"
   },
   "build": {
     "productName": "Time Tracker",
