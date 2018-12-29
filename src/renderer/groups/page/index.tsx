@@ -1,18 +1,14 @@
 import * as React from 'react';
-import { Component, Fragment } from 'react';
+import { Fragment } from 'react';
 import { connect } from 'react-redux'
 import { Card } from 'semantic-ui-react'
 
 import FloatButton from 'renderer/components/FloatButton';
-import { GlobalAction } from "renderer/store/globalActions";
-import { ModalName } from "renderer/modals/constants";
-
-import './index.css'
+import { GlobalAction } from 'renderer/store/globalActions';
+import { ModalName } from 'renderer/modals/constants';
 import { IRootState } from 'renderer/store/rootReducer';
 
-interface IState {
-
-}
+import './index.css'
 
 interface IProps {
 
@@ -20,41 +16,33 @@ interface IProps {
 
 const styleImage = src => ({backgroundImage: `url("${src}")`})
 
-class PageGroups extends Component<IProps & injectProps, IState> {
-
-    state: IState = {};
-
-    onOpenGroupForm = () => {
-        GlobalAction.showModal(ModalName.FormGroup);
-    }
-
-    render() {
-
-        const {groups} = this.props;
-
-        return (
-            <Fragment>
-                <Card.Group stackable itemsPerRow={4}>
-                    {
-                        groups.map(group => (
-                            <Card key={group.id}>
-                                <div
-                                    className='groupImage'
-                                    style={styleImage(group.image)}
-                                >
-                                    <div className='text'>
-                                        {group.name}
-                                    </div>
+const PageGroups = ({groups}: IProps & injectProps) => (
+        <Fragment>
+            <Card.Group stackable itemsPerRow={4}>
+                {
+                    groups.map(group => (
+                        <Card
+                            key={group.id}
+                            onClick={() => GlobalAction.showModal(ModalName.FormGroup)}
+                        >
+                            <div
+                                className='groupImage'
+                                style={styleImage(group.image)}
+                            >
+                                <div className='text'>
+                                    {group.name}
                                 </div>
-                            </Card>
-                        ))
-                    }
-                </Card.Group>
-                <FloatButton text='+' onClick={this.onOpenGroupForm} />
-            </Fragment>
-        );
-    }
-}
+                            </div>
+                        </Card>
+                    ))
+                }
+            </Card.Group>
+            <FloatButton
+                text='+'
+                onClick={() => GlobalAction.showModal(ModalName.FormGroup)}
+            />
+        </Fragment>
+    );
 
 const mapStateToProps = (state: IRootState) => ({
     groups: state.entries.group,

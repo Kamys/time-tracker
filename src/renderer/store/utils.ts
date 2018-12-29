@@ -1,7 +1,6 @@
 import { ComplexActionCreator1, createAction } from 'redux-act';
-import { ActionCreatorsMapObject, bindActionCreators, Dispatch } from 'redux';
+import { ActionCreatorsMapObject, bindActionCreators } from 'redux';
 import * as _ from 'lodash';
-import { bindActionToStore } from 'renderer/store/globalActions';
 
 export interface IAsyncAction<R = void, S = void, F = IPayloadError> extends ActionCreatorsMapObject {
     REQUEST: ComplexActionCreator1<R, R>;

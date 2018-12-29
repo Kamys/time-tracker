@@ -42,8 +42,8 @@ const createWindow = () => {
         title: 'Time Tracker',
         center: true,
     });
-    win.loadFile(path.join(__dirname, './index.html'))
-    //win.loadURL('http://localhost:8000/')
+    //win.loadFile(path.join(__dirname, './index.html'))
+    win.loadURL('http://localhost:8000/')
 
     let newActivities = storage.app.get().entries.activity;
     trackActivities.setActivities(newActivities)
@@ -63,7 +63,7 @@ const createWindow = () => {
     win.webContents.once('dom-ready', () => {
         trackActivities.subscribe(activities => {
             if (win) {
-                win.webContents.send('update-activities', activities);
+                win.webContents.send('change-activities', activities);
             }
         })
     })

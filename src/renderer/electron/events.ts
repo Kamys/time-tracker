@@ -10,7 +10,7 @@ export const subscribeCloseApp = () => {
 }
 
 export const subscribeUpdateActivities = (callback) => {
-    ipcRenderer.on('update-activities', callback);
+    ipcRenderer.on('change-activities', callback);
 }
 
 export const saveStore = (store) => {
