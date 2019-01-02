@@ -9,6 +9,7 @@ import { store, history } from './store';
 import Application from './application';
 
 import 'semantic-ui-css/semantic.min.css';
+import 'react-day-picker/lib/style.css';
 
 setInterval(() => {
     saveStore(store.getState())

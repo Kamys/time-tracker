@@ -3,10 +3,9 @@ import * as React from 'react';
 import { Button, Image, Modal, Form, Grid } from 'semantic-ui-react';
 import { InjectedProps } from 'redux-modal';
 
-import { IGroup } from 'renderer/groups/model';
+import { IFormProps } from 'renderer/modals/model';
 
 import './index.css';
-import { IFormProps, IModalAction } from 'renderer/modals/model';
 
 interface IState {
     name: string;

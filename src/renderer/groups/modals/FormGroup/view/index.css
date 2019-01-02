@@ -5,3 +5,7 @@
 .fields {
   margin-bottom: 10px;
 }
+
+.container {
+  display: flex;
+}

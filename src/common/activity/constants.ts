@@ -1,0 +1,1 @@
+export const ACTIVITY_DATE_FORMAT = 'D.MM.GGGG'

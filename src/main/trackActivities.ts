@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import * as activeWin from 'active-win/lib/linux';
 
+import { ACTIVITY_DATE_FORMAT } from 'src/common/activity/constants';
 import { IActivity } from 'renderer/activity/model';
 import { findReplace } from 'main/utils';
 
@@ -9,7 +10,7 @@ let interval = null;
 const intervalTime = 1;
 
 const updateActivity = (activities: IActivity[], newActivity: IActivity): IActivity[] => {
-    const todayDate = moment().format('D.MM.GGGG');
+    const todayDate = moment().format(ACTIVITY_DATE_FORMAT);
 
     const isNewActivity = (activity: IActivity) => {
         return activity.date === todayDate && newActivity.title === activity.title
