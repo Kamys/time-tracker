@@ -1,5 +1,6 @@
-export interface IGroup {
-    id: string;
+import { IEntity } from 'renderer/entries/model';
+
+export interface IGroup extends IEntity{
     name: string;
     description: string;
     image: string;

@@ -1,6 +1,6 @@
 import * as moment from 'moment';
-
 import * as activeWin from 'active-win/lib/linux';
+
 import { IActivity } from 'renderer/activity/model';
 import { findReplace } from 'main/utils';
 

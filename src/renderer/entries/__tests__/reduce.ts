@@ -36,3 +36,25 @@ describe('Update entity', () => {
         expect(reduce(defaultEntriesState, action).products[0].name).toEqual(newName)
     })
 })
+
+describe('Delete entity', () => {
+    it('Can delete user', () => {
+        // @ts-ignore
+        const action = ActionsEntries.remove.REQUEST({entityId: 1, entityName: 'users'})
+        // @ts-ignore
+        expect(reduce(defaultEntriesState, action)).toEqual({
+            ...defaultEntriesState,
+            users: [
+                defaultEntriesState.users[0],
+                defaultEntriesState.users[2],
+            ]
+        })
+    })
+
+    it('Dont change state if not found id', () => {
+        // @ts-ignore
+        const action = ActionsEntries.remove.REQUEST({entityId: undefined, entityName: 'users'})
+        // @ts-ignore
+        expect(reduce(defaultEntriesState, action)).toEqual(defaultEntriesState)
+    })
+})

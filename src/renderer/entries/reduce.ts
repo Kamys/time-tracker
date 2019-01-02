@@ -3,8 +3,8 @@ import { createReducer } from 'redux-act';
 import { findReplace } from 'main/utils';
 
 import { ActionsEntries } from './actions';
-import { mergeArray } from './utils';
-import { EntriesType, IEntriesState } from './model';
+import { mergeArray, removeItem } from './utils';
+import { EntriesType, IEntity, IEntriesState } from './model';
 
 const initialState: IEntriesState = {
     group: [],
@@ -13,7 +13,8 @@ const initialState: IEntriesState = {
 
 const reducer = createReducer({}, initialState);
 
-const changeEntity = (state: IEntriesState, entityName: EntriesType,  replacement) => ({
+type TypeReplacement = (item: IEntity[]) => IEntity[];
+const changeEntity = (state: IEntriesState, entityName: EntriesType,  replacement: TypeReplacement) => ({
     ...state,
     [entityName]: replacement(state[entityName]),
 })
@@ -41,5 +42,14 @@ reducer.on(ActionsEntries.change.REQUEST, (state, payload) => {
         return findReplace(entries, predicate, replacement, notFound)
     })
 });
+
+reducer.on(ActionsEntries.remove.REQUEST, (state, payload) => {
+    const {entityId, entityName} = payload;
+
+    return changeEntity(state, entityName, entries => {
+        return removeItem(entries, (entity) => entity.id === entityId);
+    })
+});
+
 
 export default reducer;

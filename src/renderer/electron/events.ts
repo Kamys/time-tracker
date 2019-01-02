@@ -1,6 +1,7 @@
+import electron from './importElectron';
 import { store } from 'renderer/store';
 
-const {ipcRenderer} = (window as any).require('electron');
+const {ipcRenderer} = electron;
 
 export const subscribeCloseApp = () => {
     ipcRenderer.on('close-app-request', () => {

@@ -7,9 +7,10 @@ import { EntriesType } from 'renderer/entries/model';
 import { useEntries } from 'renderer/entries/utils';
 import { imageWork } from 'renderer/groups/constants';
 import { ModalName } from 'renderer/modals/constants';
+import { GlobalAction } from 'renderer/store/globalActions';
+import { IFormProps } from 'renderer/modals/model';
 
 import view from './view'
-import { GlobalAction } from 'renderer/store/globalActions';
 
 interface IProps {
     entityName: EntriesType,
@@ -17,20 +18,34 @@ interface IProps {
     mode: 'Edit' | 'Create',
 }
 
-const mapStateToProps = (state: IRootState, props: IProps) => {
+const mapStateToProps = (state: IRootState, props: IProps): IFormProps => {
     const {mode, entityName, entityId} = props;
-    const {entity, onChange, onCreate} = useEntries(state, entityName, entityId)
-
-    const onEditGroup = (newEntity) => {
-        onChange(entityId, newEntity);
-        GlobalAction.hideModal(ModalName.FormGroup);
-    };
+    const {entity, onChange, onCreate, onRemove} = useEntries(state, entityName, entityId)
 
     if (mode === 'Edit') {
+        const onEditGroup = (newEntity) => {
+            onChange(entityId, newEntity);
+            GlobalAction.hideModal(ModalName.FormGroup);
+        };
+
+        const onRemoveGroup = () => {
+            onRemove();
+            GlobalAction.hideModal(ModalName.FormGroup);
+        };
+
         return ({
             entity,
-            onSubmit: onEditGroup,
-            actionName: mode,
+            header: 'Edit group',
+            actions: [
+                {
+                    title: 'Remove',
+                    onClick: onRemoveGroup,
+                },
+                {
+                    title: 'Save',
+                    onClick: onEditGroup,
+                },
+            ],
         });
     }
 
@@ -45,8 +60,13 @@ const mapStateToProps = (state: IRootState, props: IProps) => {
 
     return ({
         entity: null,
-        onSubmit: onCreateGroup,
-        actionName: mode,
+        header: 'Create group',
+        actions: [
+            {
+                title: 'Create',
+                onClick: onCreateGroup,
+            },
+        ],
     });
 }
 

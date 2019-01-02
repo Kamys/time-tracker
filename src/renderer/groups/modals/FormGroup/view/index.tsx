@@ -6,6 +6,7 @@ import { InjectedProps } from 'redux-modal';
 import { IGroup } from 'renderer/groups/model';
 
 import './index.css';
+import { IFormProps, IModalAction } from 'renderer/modals/model';
 
 interface IState {
     name: string;
@@ -13,10 +14,8 @@ interface IState {
     regExp: string;
 }
 
-export interface IProps extends InjectedProps {
-    entity: IGroup;
-    onSubmit: (newEntity) => void;
-    actionName: string;
+interface IProps extends InjectedProps, IFormProps {
+
 }
 
 class FormGroup extends Component<IProps, IState> {
@@ -43,7 +42,7 @@ class FormGroup extends Component<IProps, IState> {
     }
 
     render() {
-        const {show, handleHide, actionName, onSubmit} = this.props;
+        const {show, handleHide, actions, header} = this.props;
         const group = this.state
 
         const defaultInputProps = (name: keyof IState) => ({
@@ -53,7 +52,7 @@ class FormGroup extends Component<IProps, IState> {
 
         return (
             <Modal dimmer={'blurring'} open={show} onClose={handleHide}>
-                <Modal.Header>{actionName} group</Modal.Header>
+                <Modal.Header>{header}</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                         <Grid columns={2} textAlign='left'>
@@ -95,9 +94,13 @@ class FormGroup extends Component<IProps, IState> {
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='black' onClick={() => onSubmit(group)}>
-                        {actionName}
-                    </Button>
+                    {
+                        actions.map(action => (
+                            <Button color='black' onClick={() => action.onClick(group)}>
+                                {action.title}
+                            </Button>
+                        ))
+                    }
                 </Modal.Actions>
             </Modal>
         );
