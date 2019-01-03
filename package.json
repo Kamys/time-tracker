@@ -1,7 +1,10 @@
 {
   "name": "timetracker",
   "version": "1.0.0",
-  "description": "",
+  "author": "Nikita Kamyshenko <nikitakamyshenko@gmail.com>",
+  "description": "This app help tracker your time",
+  "email": "nikitakamyshenko@gmail.com",
+  "homepage": "https://github.com/Kamys/time-tracker",
   "main": "./main.js",
   "scripts": {
     "dev": "webpack-dev-server --mode=development --env.render",
