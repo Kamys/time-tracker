@@ -1,5 +1,6 @@
 import * as loadDevTool from 'electron-load-devtool';
 import { screen, app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron';
+
 const path = require('path');
 
 import storage from './storage';
@@ -9,6 +10,7 @@ import * as icon from 'src/assert/icon.png';
 let win = null;
 let tray
 let forceQuit = false;
+const isProduction = process.env.NODE_ENV === 'production';
 
 const destructionApp = () => {
     win = null
@@ -42,8 +44,12 @@ const createWindow = () => {
         title: 'Time Tracker',
         center: true,
     });
-    //win.loadFile(path.join(__dirname, './index.html'))
-    win.loadURL('http://localhost:8000/')
+
+    if (isProduction) {
+        win.loadFile(path.join(__dirname, './index.html'))
+    } else {
+        win.loadURL('http://localhost:8000/')
+    }
 
     let newActivities = storage.app.get().entries.activity;
     trackActivities.setActivities(newActivities)
