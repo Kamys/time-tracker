@@ -6,6 +6,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import rootReducer from "./rootReducer";
 import rootSaga from "./rootSaga";
+import {saveStore} from "renderer/electron/events";
 
 const history         = createHistory();
 const sagaMiddleware  = createSagaMiddleware();
@@ -17,5 +18,9 @@ const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
+
+setInterval(() => {
+    saveStore(store.getState())
+}, 5 * 1000)
 
 export {store, history};

@@ -1,15 +1,27 @@
 import * as moment from 'moment';
 import * as activeWin from 'active-win/lib/linux';
 
-import { ACTIVITY_DATE_FORMAT } from 'src/common/activity/constants';
-import { IActivity } from 'renderer/activity/model';
-import { findReplace } from 'main/utils';
+import {ACTIVITY_DATE_FORMAT} from 'src/common/activity/constants';
+import {IActivity} from 'renderer/activity/model';
+import {findReplace} from 'main/utils';
 
 let activities: IActivity[] = [];
 let interval = null;
 const intervalTime = 1;
 
-const updateActivity = (activities: IActivity[], newActivity: IActivity): IActivity[] => {
+/*const getCurrentActivities = async (callback) => {
+    const newActivity: IActivity = {
+        id: 'example',
+        date: new Date().toDateString(),
+        title: 'example',
+        secondsSpent: 1,
+        group: '',
+    };
+    activities = updateActivity(activities, newActivity);
+    callback(activities);
+}*/
+
+const updateActivity = (activities: IActivity[], newActivity): IActivity[] => {
     const todayDate = moment().format(ACTIVITY_DATE_FORMAT);
 
     const isNewActivity = (activity: IActivity) => {

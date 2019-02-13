@@ -1,14 +1,13 @@
 import * as loadDevTool from 'electron-load-devtool';
 import { screen, app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron';
-
-const path = require('path');
-
 import storage from './storage';
 import trackActivities from './trackActivities';
 import * as icon from 'src/assert/icon.png';
 
+const path = require('path');
+
 let win = null;
-let tray
+let tray;
 let forceQuit = false;
 const isProduction = process.env.NODE_ENV === 'production';
 
