@@ -1,3 +1,3 @@
-export const STORAGE_KEY = {
-    APP: 'app',
+export enum STORAGE_KEY {
+    app = 'app',
 }

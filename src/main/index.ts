@@ -1,8 +1,9 @@
 import * as loadDevTool from 'electron-load-devtool';
-import { screen, app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron';
+import {app, BrowserWindow, ipcMain, Menu, nativeImage, screen, Tray} from 'electron';
 import storage from './storage';
 import trackActivities from './trackActivities';
 import * as icon from 'src/assert/icon.png';
+import {STORAGE_KEY} from "main/storage/constant";
 
 const path = require('path');
 
@@ -50,7 +51,9 @@ const createWindow = () => {
         win.loadURL('http://localhost:8000/')
     }
 
-    let newActivities = storage.app.get().entries.activity;
+    const reduxStore = storage.get(STORAGE_KEY.app);
+    console.log('reduxStore: ', reduxStore);
+    let newActivities = reduxStore.entries.activity;
     trackActivities.setActivities(newActivities)
 
     win.on('closed', destructionApp)
@@ -79,11 +82,11 @@ const createWindow = () => {
 
 const createListeners = () => {
     ipcMain.on('save-store', (action, store) => {
-        storage.app.set(store)
+        storage.set(STORAGE_KEY.app, store)
     })
 
     ipcMain.on('load-store-request', () => {
-        const store = storage.app.get();
+        const store = storage.get(STORAGE_KEY.app);
         win.webContents.send('load-store', store);
     })
 
