@@ -10,13 +10,11 @@ import 'semantic-ui-css/semantic.min.css';
 import 'react-day-picker/lib/style.css';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <RouterConnect history={history}>
-                <Application/>
-            </RouterConnect>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <RouterConnect history={history}>
+            <Application/>
+        </RouterConnect>
+    </Provider>
     ,
     document.getElementById('root')
 );
