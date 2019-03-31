@@ -32,7 +32,7 @@ const usePagination = <T>(entries: T[], itemOnPage = 20) => {
             return currentPage;
         },
         setCurrentPage: pageIndex => {
-            if(inRange(pageIndex, 1, maxPage)) {
+            if(inRange(pageIndex, 1, maxPage + 1)) {
                 setCurrentPage(pageIndex)
             } else {
                 console.error(`setCurrentPage: Current page should be in range from 1 on ${maxPage}`)
