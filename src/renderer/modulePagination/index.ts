@@ -1,24 +1,32 @@
 import {useState} from "react";
 import {inRange} from "lodash";
 
-const getBoundingPages = (currentPage: number, maxPages: number) => {
-    const previousPage = Math.max(1, currentPage - 1);
-    const nextPage = Math.min(currentPage + 1, maxPages);
+/**
+ * Returns number in radius if number not in radius.
+ */
+export const keepRadius = (number: number, start: number, end: number = 0) => {
 
-    return {previousPage, nextPage};
+    if(number > start) {
+        return end;
+    }
+
+    if(number < end) {
+        return start;
+    }
+
+    return number;
 };
 
 const usePagination = <T>(entries: T[], itemOnPage = 20) => {
     const maxPage = Math.ceil(entries.length / itemOnPage);
     const [currentPage, setCurrentPage] = useState(1)
-    const {nextPage, previousPage} = getBoundingPages(currentPage, maxPage)
 
     return {
         nextPage: () => {
-            setCurrentPage(nextPage)
+            setCurrentPage(keepRadius(currentPage + 1, maxPage, 1))
         },
         previousPage: () => {
-            setCurrentPage(previousPage)
+            setCurrentPage(keepRadius(currentPage - 1, maxPage, 1))
         },
         getCurrentItems: (): T[] => {
             const startRange = (currentPage - 1) * itemOnPage;
