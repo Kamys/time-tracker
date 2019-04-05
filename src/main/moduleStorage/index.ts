@@ -1,16 +1,15 @@
-import electronStorage from './electronStorage';
+import storageNedb from './storageNedb';
 import { STORAGE_KEY } from './constant';
 
-
 const set = (key: STORAGE_KEY, data) => {
-    return electronStorage.set(key, data)
-}
+    return storageNedb.set(data);
+};
 
 const get = (key: STORAGE_KEY) => {
-    return electronStorage.get(key);
-}
+    return storageNedb.get(1);
+};
 
 export default {
     get,
     set,
-}
+};

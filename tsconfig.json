@@ -2,12 +2,13 @@
   "compilerOptions": {
     "types": [
       "react",
-      "jest"
+      "jest",
+      "node"
     ],
     "typeRoots": [
       "node_modules/@types"
     ],
-    "outDir": "./buildTs",
+    "outDir": "./build",
     "rootDir": "src",
     "module": "commonjs",
     "target": "es2017",
@@ -15,16 +16,16 @@
       "es2017",
       "dom"
     ],
-    "baseUrl": "src",
-    "paths": {
-      "src/*": [ "./*" ],
-      "renderer/*": [ "renderer/*" ],
-      "main/*": [ "main/*" ]
-    },
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "src/*": [ "src/*" ],
+      "renderer/*": [ "src/renderer/*" ],
+      "main/*": [ "src/main/*" ]
+    },
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -37,18 +38,15 @@
     "experimentalDecorators": true
   },
   "include": [
-    "src"
+    "src",
+    "type"
   ],
   "exclude": [
     "node_modules",
     "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "config/**/*.js",
     "webpack.config.js",
     "**/*.test.ts",
-    "**/__tests__/**/*"
+    "**/__tests__/**/*",
+    "config"
   ]
 }

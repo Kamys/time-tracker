@@ -1,12 +1,11 @@
-import * as electron from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
-import { STORAGE_KEY } from './constant';
+import {STORAGE_KEY, userDataPath} from './constant';
 
 
 class Store {
     constructor(opts) {
-        const userDataPath = (electron.app || electron.remote.app).getPath('userData');
+
         this.path = path.join(userDataPath, opts.configName + '.json');
 
         this.data = parseDataFile(this.path, opts.defaults);
