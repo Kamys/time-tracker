@@ -1,12 +1,13 @@
 import storageNedb from './storageNedb';
 import { STORAGE_KEY } from './constant';
+import {getToday} from '../utils';
 
-const set = (date, data) => {
-    return storageNedb.update(date, data);
+const set = (data) => {
+    return storageNedb.update(getToday(), data);
 };
 
 const get = (key: STORAGE_KEY) => {
-    return storageNedb.get(1);
+    return storageNedb.get(getToday());
 };
 
 export default {

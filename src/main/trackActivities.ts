@@ -9,20 +9,9 @@ let activities: IActivity[] = [];
 let interval = null;
 const intervalTime = 1;
 
-/*const getCurrentActivities = async (callback) => {
-    const newActivity: IActivity = {
-        id: 'example',
-        date: new Date().toDateString(),
-        title: 'example',
-        secondsSpent: 1,
-        group: '',
-    };
-    activities = updateActivity(activities, newActivity);
-    callback(activities);
-}*/
-
-const updateActivity = (activities: IActivity[], newActivity): IActivity[] => {
-    const todayDate = moment().format(ACTIVITY_DATE_FORMAT);
+const updateActivity = (oldActivities: IActivity[], newActivity): IActivity[] => {
+    const today = moment();
+    const todayDate = today.format(ACTIVITY_DATE_FORMAT);
 
     const isNewActivity = (activity: IActivity) => {
         return activity.date === todayDate && newActivity.title === activity.title;
@@ -34,6 +23,7 @@ const updateActivity = (activities: IActivity[], newActivity): IActivity[] => {
             title: newActivity.title,
             secondsSpent: intervalTime,
             group: '',
+            lastUpdate: today.valueOf(),
         },
         ...oldActivities,
     ];
@@ -41,9 +31,10 @@ const updateActivity = (activities: IActivity[], newActivity): IActivity[] => {
     const replacement = oldActivity => ({
         ...oldActivity,
         secondsSpent: oldActivity.secondsSpent + intervalTime,
+        lastUpdate: today.valueOf(),
     });
 
-    return findReplace(activities, isNewActivity, replacement, notFound);
+    return findReplace(oldActivities, isNewActivity, replacement, notFound);
 };
 
 const getCurrentActivities = async () => {

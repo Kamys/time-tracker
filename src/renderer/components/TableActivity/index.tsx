@@ -23,17 +23,19 @@ const TableActivity = (props: IProps) => {
                     <Table.HeaderCell>Name</Table.HeaderCell>
                     <Table.HeaderCell>Time</Table.HeaderCell>
                     <Table.HeaderCell>Date</Table.HeaderCell>
+                    <Table.HeaderCell>Last update</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
 
             <Table.Body>
                 {
-                    currentItems.map(({id, title, secondsSpent, group, date}) => (
+                    currentItems.map(({id, title, secondsSpent, group, date, lastUpdate}) => (
                         <Row
                             key={title}
                             title={title}
                             secondsSpent={secondsSpent}
                             date={date}
+                            lastUpdate={lastUpdate}
                         />
                     ))
                 }
@@ -62,13 +64,15 @@ interface IRowProps {
     title: string;
     secondsSpent: number;
     date: string;
+    lastUpdate: number;
 }
 
-const Row = React.memo(({title, secondsSpent, date}: IRowProps) => (
+const Row = React.memo(({title, secondsSpent, date, lastUpdate}: IRowProps) => (
     <Table.Row>
         <Table.Cell>{title}</Table.Cell>
         <Table.Cell>{formatSecond(secondsSpent)}</Table.Cell>
         <Table.Cell>{date}</Table.Cell>
+        <Table.Cell>{lastUpdate - 1554567310018}</Table.Cell>
     </Table.Row>
 ))
 

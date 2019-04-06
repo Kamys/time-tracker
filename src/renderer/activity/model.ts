@@ -5,4 +5,5 @@ export interface IActivity extends IEntity {
     date: string;
     secondsSpent: number;
     group: string;
+    lastUpdate: number;
 }

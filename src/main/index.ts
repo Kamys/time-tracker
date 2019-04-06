@@ -72,7 +72,7 @@ const createWindow = () => {
         trackActivities.startRecordActivities();
         setInterval(() => {
             const activities = trackActivities.getActivities();
-            storage.set(getToday(), activities);
+            storage.set(activities);
         }, 5 * 1000);
     });
 
@@ -82,7 +82,7 @@ const createWindow = () => {
 
 const createListeners = () => {
     ipcMain.on('save-store', (action, store) => {
-        storage.set(getToday(), trackActivities.getActivities());
+        storage.set(trackActivities.getActivities());
     });
 
     ipcMain.on('get-activities-request', (action, props) => {

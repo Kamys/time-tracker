@@ -16,7 +16,9 @@ const update = async (date: string, newActivities: any[]) => {
 };
 
 const get = <T>(date): Promise<T> => {
-    return db.find({ date });
+    return db.cfind({ date })
+        .sort({lastUpdate: -1})
+        .exec();
 };
 
 export default {
