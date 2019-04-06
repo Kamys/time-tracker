@@ -25,10 +25,10 @@ const updateActivity = (activities: IActivity[], newActivity): IActivity[] => {
     const todayDate = moment().format(ACTIVITY_DATE_FORMAT);
 
     const isNewActivity = (activity: IActivity) => {
-        return activity.date === todayDate && newActivity.title === activity.title
-    }
+        return activity.date === todayDate && newActivity.title === activity.title;
+    };
 
-    const notFound = (oldActivities) => [
+    const notFound = oldActivities => [
         {
             date: todayDate,
             title: newActivity.title,
@@ -38,42 +38,41 @@ const updateActivity = (activities: IActivity[], newActivity): IActivity[] => {
         ...oldActivities,
     ];
 
-    const replacement = (oldActivity) => ({
+    const replacement = oldActivity => ({
         ...oldActivity,
         secondsSpent: oldActivity.secondsSpent + intervalTime,
     });
 
-    return findReplace(activities, isNewActivity, replacement, notFound)
-}
+    return findReplace(activities, isNewActivity, replacement, notFound);
+};
 
-const getCurrentActivities = async (callback) => {
+const getCurrentActivities = async () => {
     const newActivity = await activeWin();
     activities = updateActivity(activities, newActivity);
-    callback(activities);
-}
+};
 
-const subscribe = (callback) => {
+const startRecordActivities = () => {
     if (interval) {
         destruction();
     }
-    interval = setInterval(getCurrentActivities, intervalTime * 1000, callback);
-}
+    interval = setInterval(getCurrentActivities, intervalTime * 1000);
+};
 
-const setActivities = (newActivities) => {
+const setActivities = newActivities => {
     activities = newActivities;
-}
+};
 
 const getActivities = () => {
     return activities;
-}
+};
 
 const destruction = () => {
-    clearInterval(interval)
-}
+    clearInterval(interval);
+};
 
 export default {
     setActivities,
-    subscribe,
     getActivities,
     destruction,
+    startRecordActivities,
 };

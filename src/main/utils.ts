@@ -1,10 +1,13 @@
-const defaultNotFound = list => list
+import * as moment from 'moment';
+import {ACTIVITY_DATE_FORMAT} from 'src/common/activity/constants';
+
+const defaultNotFound = list => list;
 
 export const findReplace = (list: object[], predicate, replacement, notFound = defaultNotFound) => {
     const index = list.findIndex(predicate);
     const foundItem = list[index];
     if (!foundItem) {
-        return notFound(list)
+        return notFound(list);
     }
 
     return [
@@ -12,5 +15,9 @@ export const findReplace = (list: object[], predicate, replacement, notFound = d
         ...list.filter((item, i) => {
             return i !== index;
         }),
-    ]
-}
+    ];
+};
+
+export const getToday = () => {
+    return moment().format(ACTIVITY_DATE_FORMAT);
+};

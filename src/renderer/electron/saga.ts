@@ -3,9 +3,9 @@ import { ActionsElectron } from 'renderer/electron/actions';
 import { loadStore, subscribeCloseApp } from 'renderer/electron/events';
 
 function* loading() {
-    yield call(subscribeCloseApp)
-    const store = yield call(loadStore)
-    yield put(ActionsElectron.loadingStore.SUCCESS({store}))
+    yield call(subscribeCloseApp);
+    const store = yield call(loadStore);
+    yield put(ActionsElectron.loadingStore.SUCCESS({store}));
 }
 
 function* watcher() {

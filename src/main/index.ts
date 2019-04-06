@@ -5,6 +5,7 @@ import storage from './moduleStorage';
 import trackActivities from './trackActivities';
 import * as icon from 'src/assert/icon.png';
 import {STORAGE_KEY} from 'main/moduleStorage/constant';
+import {getToday} from "main/utils";
 
 const path = require('path');
 
@@ -52,11 +53,8 @@ const createWindow = () => {
         win.loadURL('http://localhost:8000/');
     }
 
-    const reduxStore = storage.get(STORAGE_KEY.app)
-        .then(activities => {
-            console.log('activity: ', reduxStore);
-            trackActivities.setActivities(activities);
-        });
+    storage.get(STORAGE_KEY.app)
+        .then(trackActivities.setActivities);
 
     win.on('closed', destructionApp);
     win.on('close', event => {
@@ -71,11 +69,11 @@ const createWindow = () => {
     });
 
     win.webContents.once('dom-ready', () => {
-        trackActivities.subscribe(activities => {
-            if (win) {
-                win.webContents.send('change-activities', activities);
-            }
-        });
+        trackActivities.startRecordActivities();
+        setInterval(() => {
+            const activities = trackActivities.getActivities();
+            storage.set(getToday(), activities);
+        }, 5 * 1000);
     });
 
     loadDevTool(loadDevTool.REDUX_DEVTOOLS);
@@ -84,10 +82,20 @@ const createWindow = () => {
 
 const createListeners = () => {
     ipcMain.on('save-store', (action, store) => {
-        storage.set(STORAGE_KEY.app, store.entries.activity);
+        storage.set(getToday(), trackActivities.getActivities());
+    });
+
+    ipcMain.on('get-activities-request', (action, props) => {
+        console.log('get-activities-request');
+        storage.get(STORAGE_KEY.app)
+            .then(activities => {
+                console.log('get-activities-success: ', activities);
+                win.webContents.send('get-activities-success', activities);
+            });
     });
 
     ipcMain.on('load-store-request', () => {
+        console.log('load-store-request');
         storage.get(STORAGE_KEY.app)
             .then(activities => {
                 const store = {
