@@ -1,12 +1,11 @@
-import createHistory from "history/createBrowserHistory";
-import createSagaMiddleware from "redux-saga";
-import { routerMiddleware } from "react-router-redux";
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+import createHistory from 'history/createBrowserHistory';
+import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware } from 'react-router-redux';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import rootReducer from "./rootReducer";
-import rootSaga from "./rootSaga";
-import {saveStore} from "renderer/electron/events";
+import rootReducer from './rootReducer';
+import rootSaga from './rootSaga';
 
 const history         = createHistory();
 const sagaMiddleware  = createSagaMiddleware();
@@ -18,9 +17,5 @@ const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
-
-setInterval(() => {
-    saveStore(store.getState())
-}, 5 * 1000)
 
 export {store, history};

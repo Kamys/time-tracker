@@ -1,17 +1,15 @@
 import electron from './importElectron';
-import {store as reduxStore} from 'renderer/store';
 
 const {ipcRenderer} = electron;
 
 export const subscribeCloseApp = () => {
     ipcRenderer.on('close-app-request', () => {
-        saveStore(reduxStore.getState());
         ipcRenderer.send('close-app');
     });
 };
 
-export const saveStore = store => {
-    ipcRenderer.send('save-store', store);
+export const saveStore = (store, props) => {
+    ipcRenderer.send('save-store', props);
 };
 
 export const loadStore = async () => {
@@ -27,7 +25,6 @@ export const loadStore = async () => {
 export const getActivities = () => {
     return new Promise((resolve => {
         ipcRenderer.send('get-activities-request');
-        console.log('React get-activities-request');
         ipcRenderer.on('get-activities-success', (event, activities) => {
             resolve(activities);
         });

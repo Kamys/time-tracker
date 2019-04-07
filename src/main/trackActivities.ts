@@ -11,15 +11,15 @@ const intervalTime = 1;
 
 const updateActivity = (oldActivities: IActivity[], newActivity): IActivity[] => {
     const today = moment();
-    const todayDate = today.format(ACTIVITY_DATE_FORMAT);
+    const date = today.format(ACTIVITY_DATE_FORMAT);
 
     const isNewActivity = (activity: IActivity) => {
-        return activity.date === todayDate && newActivity.title === activity.title;
+        return activity.date === date && newActivity.title === activity.title;
     };
 
     const notFound = oldActivities => [
         {
-            date: todayDate,
+            date,
             title: newActivity.title,
             secondsSpent: intervalTime,
             group: '',

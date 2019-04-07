@@ -5,7 +5,6 @@ import storage from './moduleStorage';
 import trackActivities from './trackActivities';
 import * as icon from 'src/assert/icon.png';
 import {STORAGE_KEY} from 'main/moduleStorage/constant';
-import {getToday} from "main/utils";
 
 const path = require('path');
 
@@ -53,9 +52,6 @@ const createWindow = () => {
         win.loadURL('http://localhost:8000/');
     }
 
-    storage.get(STORAGE_KEY.app)
-        .then(trackActivities.setActivities);
-
     win.on('closed', destructionApp);
     win.on('close', event => {
         if (win) {
@@ -68,34 +64,32 @@ const createWindow = () => {
         }
     });
 
-    win.webContents.once('dom-ready', () => {
-        trackActivities.startRecordActivities();
-        setInterval(() => {
-            const activities = trackActivities.getActivities();
-            storage.set(activities);
-        }, 5 * 1000);
-    });
-
+    storage.get(STORAGE_KEY.app)
+        .then(activities => {
+            trackActivities.setActivities(activities);
+        })
+        .then(() => {
+            win.webContents.once('dom-ready', () => {
+                trackActivities.startRecordActivities();
+                setInterval(() => {
+                    const activities = trackActivities.getActivities();
+                    storage.set(activities);
+                }, 5 * 1000);
+            });
+        });
     loadDevTool(loadDevTool.REDUX_DEVTOOLS);
     loadDevTool(loadDevTool.REACT_DEVELOPER_TOOLS);
 };
 
 const createListeners = () => {
-    ipcMain.on('save-store', (action, store) => {
-        storage.set(trackActivities.getActivities());
-    });
-
     ipcMain.on('get-activities-request', (action, props) => {
-        console.log('get-activities-request');
         storage.get(STORAGE_KEY.app)
             .then(activities => {
-                console.log('get-activities-success: ', activities);
                 win.webContents.send('get-activities-success', activities);
             });
     });
 
     ipcMain.on('load-store-request', () => {
-        console.log('load-store-request');
         storage.get(STORAGE_KEY.app)
             .then(activities => {
                 const store = {
