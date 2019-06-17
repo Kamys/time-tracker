@@ -19,7 +19,7 @@ const appReducers = combineReducers({
 
 const rootReducer = (state, action: Action<{store: IRootState}>) => {
     if (action.type === ActionsElectron.loadingStore.SUCCESS.toString()) {
-        state = action.payload.store;
+        state.entries = action.payload.store.entries;
     }
     return appReducers(state, action);
 };

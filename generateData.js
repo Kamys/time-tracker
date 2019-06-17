@@ -2,18 +2,19 @@ const datastore = require('nedb-promise');
 const _ = require('lodash');
 const moment = require('moment');
 
-let dataBase = datastore({
+const DAY_RANGE = 365 * 2;
+const ACTIVITIES_IN_DAY = 50;
+
+const dataBase = datastore({
 	filename: './dataBaseTest',
 	autoload: true
 });
 
 
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1) + min);
-}
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const createForDay = (date) => {
-	return _.times(1000, () => (
+	return _.times(ACTIVITIES_IN_DAY, () => (
 		{
 			date,
 			title: `Test ${getRandomInt(1, 600000)}`,
@@ -25,7 +26,7 @@ const createForDay = (date) => {
 };
 
 let result = [];
-_.times(360, (index) => {
+_.times(DAY_RANGE, (index) => {
 	const date = moment().add(index, 'day').format('D.MM.GGGG');
 	return result = [...result, ...createForDay(date)];
 });
@@ -33,7 +34,7 @@ _.times(360, (index) => {
 console.time('Generate data');
 
 const load = async () => {
-	// await dataBase.remove({}, { multi: true });
+	await dataBase.remove({}, { multi: true });
 	await dataBase.insert(result);
 
 	console.timeEnd('Generate data');
