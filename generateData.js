@@ -1,3 +1,7 @@
+/**
+ * This code need for generate test data for testing.
+ */
+
 const datastore = require('nedb-promise');
 const _ = require('lodash');
 const moment = require('moment');
