@@ -8,6 +8,6 @@ export const ActionsEntries = {
     create: createAsyncActions<{ entityName: EntriesType, entity: object }>('CREATE'),
     remove: createAsyncActions<{ entityName: EntriesType, entityId: string }>('REMOVE'),
     change: createAsyncActions<{ entityName: EntriesType, id: string }>('UPDATE'),
-}
+};
 
 export type TypeActionsEntries = typeof ActionsEntries;

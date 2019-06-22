@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { reducer as modal } from 'redux-modal'
+import { reducer as modal } from 'redux-modal';
 import { Action } from 'redux-act';
 
-import entries from 'renderer/entries/reduce'
+import entries from 'renderer/entries/reduce';
 import { IEntriesState } from 'renderer/entries/model';
 import { ActionsElectron } from 'renderer/electron/actions';
 
@@ -19,7 +19,7 @@ const appReducers = combineReducers({
 
 const rootReducer = (state, action: Action<{store: IRootState}>) => {
     if (action.type === ActionsElectron.loadingStore.SUCCESS.toString()) {
-        state.entries = action.payload.store.entries;
+        state = action.payload.store;
     }
     return appReducers(state, action);
 };

@@ -9,6 +9,7 @@ import { GlobalAction } from 'renderer/store/globalActions';
 import { getActivities } from '../selectors';
 
 import './index.css';
+import useInterval from 'renderer/activity/utils';
 
 const mapStateToProps = (state: IRootState) => ({
     activities: getActivities(state),
@@ -21,9 +22,16 @@ interface IProps extends injectProps {
 }
 
 const Activity = (props: IProps) => {
-    useEffect(() => {
+
+    const updateActivity = () => {
         GlobalAction.entries.loading.REQUEST({entityName: 'activity'});
+    };
+
+    useEffect(() => {
+        updateActivity();
     }, []);
+
+    useInterval(updateActivity, 5 * 1000);
 
     const {activities} = props;
 

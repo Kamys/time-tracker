@@ -1,15 +1,17 @@
 import electron from './importElectron';
+import { store as reduxStore } from 'renderer/store';
 
-const {ipcRenderer} = electron;
+const { ipcRenderer } = electron;
 
 export const subscribeCloseApp = () => {
     ipcRenderer.on('close-app-request', () => {
+        saveStore(reduxStore.getState());
         ipcRenderer.send('close-app');
     });
 };
 
-export const saveStore = (store, props) => {
-    ipcRenderer.send('save-store', props);
+export const saveStore = store => {
+    ipcRenderer.send('save-store', store);
 };
 
 export const loadStore = async () => {
