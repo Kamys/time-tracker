@@ -3,7 +3,8 @@ import { app, BrowserWindow, ipcMain, Menu, nativeImage, screen, Tray } from 'el
 
 import * as icon from 'src/assert/icon.png';
 import { isProduction } from 'src/common/constant';
-import storage from './moduleStorage';
+import { IRootState } from 'renderer/store/rootReducer';
+import useStore from './moduleStorage';
 import trackActivities from './trackActivities';
 
 const path = require('path');
@@ -36,6 +37,22 @@ const createTray = () => {
     tray.setContextMenu(contextMenu);
 };
 
+const recordActivity = () => {
+    useStore('activity').get()
+        .then(activities => {
+            trackActivities.setActivities(activities);
+        })
+        .then(() => {
+            win.webContents.once('dom-ready', () => {
+                trackActivities.startRecordActivities();
+                setInterval(() => {
+                    const activities = trackActivities.getActivities();
+                    useStore('activity').update(activities);
+                }, 5 * 1000);
+            });
+        });
+};
+
 const createWindow = () => {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
     win = new BrowserWindow({
@@ -63,38 +80,29 @@ const createWindow = () => {
         }
     });
 
-    storage.get()
-        .then(activities => {
-            trackActivities.setActivities(activities);
-        })
-        .then(() => {
-            win.webContents.once('dom-ready', () => {
-                trackActivities.startRecordActivities();
-                setInterval(() => {
-                    const activities = trackActivities.getActivities();
-                    storage.set(activities);
-                }, 5 * 1000);
-            });
-        });
+    recordActivity();
     loadDevTool(loadDevTool.REDUX_DEVTOOLS);
     loadDevTool(loadDevTool.REACT_DEVELOPER_TOOLS);
 };
 
 const createListeners = () => {
     ipcMain.on('get-activities-request', (action, props) => {
-        storage.get()
+        useStore('activity').get()
             .then(activities => {
                 win.webContents.send('get-activities-success', activities);
             });
     });
 
     ipcMain.on('load-store-request', () => {
-        storage.get()
-            .then(activities => {
+        const loadingActivity = useStore('activity').get();
+        const loadingGroup = useStore('group').get();
+
+        Promise.all([loadingActivity, loadingGroup])
+            .then(([activity, group]) => {
                 const store = {
                     entries: {
-                        activity: activities,
-                        group: [],
+                        activity,
+                        group,
                     },
                 };
                 win.webContents.send('load-store', store);
@@ -106,6 +114,12 @@ const createListeners = () => {
         if (process.platform !== 'darwin') {
             app.quit();
         }
+    });
+
+    ipcMain.on('save-store', (action, store: IRootState) => {
+        const { activity, group } = store.entries;
+        useStore('activity').update(activity);
+        useStore('group').update(group);
     });
 };
 

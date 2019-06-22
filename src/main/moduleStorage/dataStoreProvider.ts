@@ -8,13 +8,13 @@ const getUserDataPath = () => {
         return path.join(userDataPath, 'appStorage/main');
     }
 
-    return './dataBaseTest';
+    return './tmp';
 };
 
-const createDataStore = () => {
-    const filename = getUserDataPath();
+const createDataStore = (name: string) => {
+    const dataPath = getUserDataPath();
     return Datastore({
-        filename,
+        filename: path.resolve(dataPath, name),
         autoload: true,
     });
 };

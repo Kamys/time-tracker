@@ -1,5 +1,6 @@
 import electron from './importElectron';
 import { store as reduxStore } from 'renderer/store';
+import { IRootState } from 'renderer/store/rootReducer';
 
 const { ipcRenderer } = electron;
 
@@ -10,7 +11,7 @@ export const subscribeCloseApp = () => {
     });
 };
 
-export const saveStore = store => {
+export const saveStore = (store: IRootState) => {
     ipcRenderer.send('save-store', store);
 };
 
