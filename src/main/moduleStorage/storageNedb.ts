@@ -1,16 +1,8 @@
-import * as Datastore from 'nedb-promise';
-import * as path from 'path';
+import dataStoreProvider from './dataStoreProvider';
 
-import {userDataPath} from 'main/moduleStorage/constant';
+const db = dataStoreProvider.createDataStore();
 
-const databaseFilePath = path.join(userDataPath, 'appStorage/main');
-
-const db = Datastore({
-    filename: './dataBaseTest',
-    autoload: true,
-});
-
-const update = async (date: string, newActivities: any[]) => {
+const update = async (newActivities: any[], date: string) => {
     await db.remove({date}, { multi: true });
     return db.insert(newActivities);
 };

@@ -1,17 +1,16 @@
 import * as loadDevTool from 'electron-load-devtool';
-import {app, BrowserWindow, ipcMain, Menu, nativeImage, screen, Tray} from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, screen, Tray } from 'electron';
 
+import * as icon from 'src/assert/icon.png';
+import { isProduction } from 'src/common/constant';
 import storage from './moduleStorage';
 import trackActivities from './trackActivities';
-import * as icon from 'src/assert/icon.png';
-import {STORAGE_KEY} from 'main/moduleStorage/constant';
 
 const path = require('path');
 
 let win = null;
 let tray;
 let forceQuit = false;
-const isProduction = process.env.NODE_ENV === 'production';
 
 const destructionApp = () => {
     win = null;
@@ -38,7 +37,7 @@ const createTray = () => {
 };
 
 const createWindow = () => {
-    const {width, height} = screen.getPrimaryDisplay().workAreaSize;
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
     win = new BrowserWindow({
         width: width - 500,
         height: height - 200,
@@ -64,7 +63,7 @@ const createWindow = () => {
         }
     });
 
-    storage.get(STORAGE_KEY.app)
+    storage.get()
         .then(activities => {
             trackActivities.setActivities(activities);
         })
@@ -83,14 +82,14 @@ const createWindow = () => {
 
 const createListeners = () => {
     ipcMain.on('get-activities-request', (action, props) => {
-        storage.get(STORAGE_KEY.app)
+        storage.get()
             .then(activities => {
                 win.webContents.send('get-activities-success', activities);
             });
     });
 
     ipcMain.on('load-store-request', () => {
-        storage.get(STORAGE_KEY.app)
+        storage.get()
             .then(activities => {
                 const store = {
                     entries: {
