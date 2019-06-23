@@ -1,31 +1,24 @@
-import dataStoreProvider from './dataStoreProvider';
-import { getToday } from 'main/utils';
+import * as Datastore from 'nedb-promise';
+import * as path from 'path';
+import { isProduction } from 'src/common/constant';
+import { userDataPath } from './constant';
 
-export interface IStore {
-    update: (data: any[], date?: string) => void;
-    get: <T>(date?: string) => Promise<T>;
-}
+const getUserDataPath = () => {
+    if (isProduction) {
+        return path.join(userDataPath, 'appStorage/main');
+    }
 
-const createStore = (name: string): IStore => {
-    const db = dataStoreProvider.createDataStore(name);
-
-    const today = getToday();
-
-    const update = async (data: any[], date: string = today) => {
-        await db.remove({date}, { multi: true });
-        db.insert(data);
-    };
-
-    const get = <T>(date: string = today): Promise<T> => {
-        return db.cfind({ date })
-            .sort({lastUpdate: -1})
-            .exec();
-    };
-
-    return {
-        update,
-        get,
-    };
+    return './tmp';
 };
 
-export default createStore;
+const createDataStore = (name: string) => {
+    const dataPath = getUserDataPath();
+    return Datastore({
+        filename: path.resolve(dataPath, name),
+        autoload: true,
+    });
+};
+
+export default {
+    createDataStore,
+};

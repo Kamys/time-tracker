@@ -1,15 +1,22 @@
-import createStore, { IStore } from './createStore';
+import { IDictionary } from 'src/common/type';
+import storeAdapter, { IStore } from './storeAdapter';
+
+type StoreNames = 'activity' | 'group';
 
 const storeCache = {};
 
-type StoreNames = 'activity' | 'group';
+const mapAdapter: IDictionary<(name: StoreNames) => IStore> = {
+    activity: storeAdapter.createActivityAdapter,
+    group: storeAdapter.createDefaultAdapter,
+};
 
 const useStore = (name: StoreNames): IStore => {
     const store = storeCache[name];
     if (store) {
         return store;
     }
-    const newStore = createStore(name);
+    const createAdapter = mapAdapter[name];
+    const newStore = createAdapter(name);
     storeCache[name] = newStore;
     return newStore;
 };
