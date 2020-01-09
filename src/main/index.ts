@@ -1,13 +1,12 @@
 import * as loadDevTool from 'electron-load-devtool';
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, screen, Tray } from 'electron';
 
-import * as icon from 'src/assert/icon.png';
+import trayIconPath from 'src/assert/icon.png';
 import { isProduction } from 'src/common/constant';
 import { IRootState } from 'renderer/store/rootReducer';
 import useStore from './moduleStorage';
 import trackActivities from './trackActivities';
-
-const path = require('path');
+import * as path from 'path';
 
 let win = null;
 let tray;
@@ -19,7 +18,7 @@ const destructionApp = () => {
 };
 
 const createTray = () => {
-    const trayIcon = nativeImage.createFromDataURL(icon);
+    const trayIcon = path.join(__dirname, trayIconPath);
     tray = new Tray(trayIcon);
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -33,7 +32,7 @@ const createTray = () => {
         },
     ]);
 
-    tray.setHighlightMode('always');
+    tray.setToolTip('This is my application.');
     tray.setContextMenu(contextMenu);
 };
 
@@ -44,6 +43,7 @@ const recordActivity = () => {
         })
         .then(() => {
             win.webContents.once('dom-ready', () => {
+                console.log('startRecordActivities!');
                 trackActivities.startRecordActivities();
                 setInterval(() => {
                     const activities = trackActivities.getActivities();
@@ -60,6 +60,9 @@ const createWindow = () => {
         height: height - 200,
         title: 'Time Tracker',
         center: true,
+        webPreferences: {
+            nodeIntegration: true,
+        },
     });
 
     if (isProduction) {
@@ -87,8 +90,10 @@ const createWindow = () => {
 
 const createListeners = () => {
     ipcMain.on('get-activities-request', (action, props) => {
+        console.log('get-activities-request: ');
         useStore('activity').get()
             .then(activities => {
+                console.log('activities: ', activities);
                 win.webContents.send('get-activities-success', activities);
             });
     });

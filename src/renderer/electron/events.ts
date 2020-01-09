@@ -28,6 +28,7 @@ export const loadStore = async () => {
 export const getActivities = () => {
     return new Promise((resolve => {
         ipcRenderer.send('get-activities-request');
+        console.log('web send get-activities-request');
         ipcRenderer.on('get-activities-success', (event, activities) => {
             resolve(activities);
         });

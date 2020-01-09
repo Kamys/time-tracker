@@ -10,10 +10,10 @@
     ],
     "outDir": "./build",
     "rootDir": "src",
-    "module": "commonjs",
-    "target": "es2017",
+    "module": "es6",
+    "target": "es2020",
     "lib": [
-      "es2017",
+      "es2020",
       "dom"
     ],
     "sourceMap": true,

@@ -8,7 +8,7 @@ const getUserDataPath = () => {
         return path.join(userDataPath, 'appStorage/main');
     }
 
-    return './tmp';
+    return './tmpData';
 };
 
 const createDataStore = (name: string) => {
