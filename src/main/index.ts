@@ -43,7 +43,6 @@ const recordActivity = () => {
         })
         .then(() => {
             win.webContents.once('dom-ready', () => {
-                console.log('startRecordActivities!');
                 trackActivities.startRecordActivities();
                 setInterval(() => {
                     const activities = trackActivities.getActivities();
@@ -90,10 +89,8 @@ const createWindow = () => {
 
 const createListeners = () => {
     ipcMain.on('get-activities-request', (action, props) => {
-        console.log('get-activities-request: ');
         useStore('activity').get()
             .then(activities => {
-                console.log('activities: ', activities);
                 win.webContents.send('get-activities-success', activities);
             });
     });
