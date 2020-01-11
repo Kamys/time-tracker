@@ -1,13 +1,13 @@
-import { fork } from 'redux-saga/effects';
+import { call, all } from 'redux-saga/effects';
 
 import activity from 'renderer/activity/saga';
 import electron from 'renderer/electron/saga';
 
 function* rootSaga() {
-  yield [
-    ...activity.map(fork),
-    ...electron.map(fork),
-  ];
+  return yield all([
+    call(activity),
+    call(electron),
+  ]);
 }
 
 export default rootSaga;

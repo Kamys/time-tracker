@@ -11,10 +11,8 @@ function* loading(action: Action<{ entityName: EntriesType }>) {
     }
 }
 
-function* watcher() {
-    yield all([
+export default function*() {
+    return yield all([
         takeEvery(ActionsEntries.loading.REQUEST.toString(), loading),
     ]);
 }
-
-export default [watcher];

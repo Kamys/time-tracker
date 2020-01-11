@@ -8,10 +8,8 @@ function* loading() {
     yield put(ActionsElectron.loadingStore.SUCCESS({store}));
 }
 
-function* watcher() {
-    yield all([
+export default function*() {
+    return yield all([
         takeEvery(ActionsElectron.loadingStore.REQUEST.toString(), loading),
     ]);
 }
-
-export default [watcher];
