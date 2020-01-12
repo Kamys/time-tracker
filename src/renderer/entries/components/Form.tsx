@@ -2,8 +2,7 @@ import { Component } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux'
 
-import { IRootState } from 'renderer/store/rootReducer';
-import { EntriesType } from 'renderer/entries/model';
+import { EntriesType, IRootState } from 'common/types/domain';
 import { useEntries } from 'renderer/entries/utils';
 
 export interface IState {

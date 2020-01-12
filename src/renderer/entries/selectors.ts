@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect'
 import { find } from 'lodash/fp'
 
-import { IRootState } from 'renderer/store/rootReducer';
-import { EntriesType } from 'renderer/entries/model';
+import { EntriesType, IRootState } from 'common/types/domain';
 
 export const getEntries = (state: IRootState, name: EntriesType) => state.entries[name];
 

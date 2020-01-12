@@ -1,7 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { ActionsEntries } from 'renderer/entries/actions';
 import { Action } from 'redux-act';
-import { EntriesType } from 'renderer/entries/model';
+import { EntriesType } from 'common/types/domain';
 import { getActivities } from 'renderer/electron/events';
 
 function* loading(action: Action<{ entityName: EntriesType }>) {

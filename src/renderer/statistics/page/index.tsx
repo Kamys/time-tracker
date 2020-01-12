@@ -5,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Button, Grid } from 'semantic-ui-react';
 import 'chartjs-plugin-labels';
 
-import { IRootState } from 'renderer/store/rootReducer';
+import { IRootState } from 'common/types/domain';
 import { getGroupTime } from 'renderer/statistics/utils';
 import { formatSecond } from 'renderer/activity/utils';
 import SelectRange from 'renderer/statistics/page/SelectRange';

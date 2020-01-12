@@ -9,6 +9,8 @@ import Application from './application';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-day-picker/lib/style.css';
 
+console.log('Run renderer');
+
 ReactDOM.render(
     <Provider store={store}>
         <RouterConnect history={history}>

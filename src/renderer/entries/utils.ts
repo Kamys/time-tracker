@@ -1,6 +1,6 @@
 import {isObject, isArray} from 'lodash';
 import { GlobalAction } from 'renderer/store/globalActions';
-import { EntriesType } from 'renderer/entries/model';
+import { EntriesType } from 'common/types/domain';
 import { getEntity } from 'renderer/entries/selectors';
 
 export const mergeArray = (baseArray, newArray) => {

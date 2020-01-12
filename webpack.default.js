@@ -10,6 +10,7 @@ const paths = {
   assets: path.join(__dirname, './assets'),
   renderer: path.join(__dirname, './src/renderer'),
   main: path.join(__dirname, './src/main'),
+  common: path.join(__dirname, './src/common'),
 }
 
 const webpackModulesRule = {
@@ -59,6 +60,7 @@ const commonConfig = {
       src: paths.source,
       renderer: paths.renderer,
       main: paths.main,
+      common: paths.common,
     },
   },
   node: {

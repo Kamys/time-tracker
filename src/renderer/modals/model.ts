@@ -1,5 +1,3 @@
-import { IEntity } from 'renderer/entries/model';
-
 export interface IModalAction {
     title: string;
     onClick: (entity) => void;

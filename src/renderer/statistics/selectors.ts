@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 import * as moment from 'moment';
 
-import { IRootState } from 'renderer/store/rootReducer';
-import { ACTIVITY_DATE_FORMAT } from 'src/common/activity/constants';
-import { IActivity } from 'renderer/activity/model';
+import { IActivity, IRootState } from 'common/types/domain';
+import { ACTIVITY_DATE_FORMAT } from 'common/activity/constants';
 import { getActivities } from 'renderer/activity/selectors';
 
 import { dateUtils } from 'react-day-picker/utils';

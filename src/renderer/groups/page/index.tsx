@@ -6,7 +6,7 @@ import { Card } from 'semantic-ui-react'
 import FloatButton from 'renderer/components/FloatButton';
 import { GlobalAction } from 'renderer/store/globalActions';
 import { ModalName } from 'renderer/modals/constants';
-import { IRootState } from 'renderer/store/rootReducer';
+import { IRootState } from 'common/types/domain';
 
 import './index.css'
 

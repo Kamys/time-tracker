@@ -1,13 +1,13 @@
 import * as loadDevTool from 'electron-load-devtool';
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, screen, Tray } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, screen, Tray } from 'electron';
 
-import trayIconPath from 'src/assert/icon.png';
-import { isProduction } from 'src/common/constant';
-import { IRootState } from 'renderer/store/rootReducer';
+import trayIconPath from 'src/assets/icon.png';
+import { isProduction } from 'common/constant';
+import { IRootState } from 'common/types/domain';
 import useStore from './moduleStorage';
 import trackActivities from './trackActivities';
 import * as path from 'path';
-
+console.log('Run main');
 let win = null;
 let tray;
 let forceQuit = false;

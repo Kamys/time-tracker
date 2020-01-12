@@ -1,4 +1,4 @@
-import { IGroup } from './model';
+import { IGroup } from 'common/types/domain';
 import { ActionsEntries } from 'renderer/entries/actions';
 
 export const ActionsGroup = {

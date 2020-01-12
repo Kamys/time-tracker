@@ -1,6 +1,6 @@
 import * as Datastore from 'nedb-promise';
 import * as path from 'path';
-import { isProduction } from 'src/common/constant';
+import { isProduction } from 'common/constant';
 import { userDataPath } from './constant';
 
 const getUserDataPath = () => {

@@ -1,10 +1,10 @@
 import { createReducer } from 'redux-act';
 
-import { findReplace } from 'main/utils';
+import { findReplace } from 'common/utils';
 
 import { ActionsEntries } from './actions';
 import { mergeArray, removeItem } from './utils';
-import { EntriesType, IEntity, IEntriesState } from './model';
+import { EntriesType, IEntity, IEntriesState } from 'common/types/domain';
 
 const initialState: IEntriesState = {
     group: [],

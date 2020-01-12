@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Table} from 'semantic-ui-react'
+import {Table} from 'semantic-ui-react';
 
 import {formatSecond} from 'renderer/activity/utils';
-import {IActivity} from 'renderer/activity/model';
+import {IActivity} from 'common/types/domain';
 import modulePagination from 'renderer/modulePagination';
-import Pagination from "renderer/modulePagination/components/Pagination";
+import Pagination from 'renderer/modulePagination/components/Pagination';
 
 interface IProps {
     activities: IActivity[];
@@ -56,7 +56,7 @@ const TableActivity = (props: IProps) => {
             }
         </Table>
     );
-}
+};
 
 interface IRowProps {
     title: string;
@@ -70,8 +70,6 @@ const Row = React.memo(({title, secondsSpent, date}: IRowProps) => (
         <Table.Cell>{formatSecond(secondsSpent)}</Table.Cell>
         <Table.Cell>{date}</Table.Cell>
     </Table.Row>
-))
-
-
+));
 
 export default TableActivity;

@@ -1,6 +1,6 @@
 import electron from './importElectron';
 import { store as reduxStore } from 'renderer/store';
-import { IRootState } from 'renderer/store/rootReducer';
+import { IRootState } from 'common/types/domain';
 
 const { ipcRenderer } = electron;
 
@@ -28,7 +28,6 @@ export const loadStore = async () => {
 export const getActivities = () => {
     return new Promise((resolve => {
         ipcRenderer.send('get-activities-request');
-        console.log('web send get-activities-request');
         ipcRenderer.on('get-activities-success', (event, activities) => {
             resolve(activities);
         });

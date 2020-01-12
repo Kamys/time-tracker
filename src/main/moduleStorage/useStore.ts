@@ -1,4 +1,4 @@
-import { IDictionary } from 'src/common/type';
+import { IDictionary } from 'common/types';
 import storeAdapter, { IStore } from './storeAdapter';
 
 type StoreNames = 'activity' | 'group';

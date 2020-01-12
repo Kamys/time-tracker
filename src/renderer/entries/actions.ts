@@ -1,5 +1,5 @@
 import { createActionCreator } from 'renderer/store/utils';
-import { EntriesType } from 'renderer/entries/model';
+import { EntriesType } from 'common/types/domain';
 
 const createAsyncActions = createActionCreator('ENTRIES');
 

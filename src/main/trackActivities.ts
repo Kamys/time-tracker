@@ -1,9 +1,9 @@
 import * as moment from 'moment';
 import * as activeWin from 'active-win/lib/linux';
 
-import {ACTIVITY_DATE_FORMAT} from 'src/common/activity/constants';
-import {IActivity} from 'renderer/activity/model';
-import {findReplace} from 'main/utils';
+import {ACTIVITY_DATE_FORMAT} from 'common/activity/constants';
+import {IActivity} from 'common/types/domain';
+import {findReplace} from 'common/utils';
 
 let activities: IActivity[] = [];
 let interval = null;

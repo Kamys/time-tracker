@@ -24,7 +24,8 @@
     "paths": {
       "src/*": [ "src/*" ],
       "renderer/*": [ "src/renderer/*" ],
-      "main/*": [ "src/main/*" ]
+      "main/*": [ "src/main/*" ],
+      "common/*": [ "src/common/*" ]
     },
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -48,5 +49,10 @@
     "**/*.test.ts",
     "**/__tests__/**/*",
     "config"
-  ]
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": [
+      "./src/**/*"
+    ]
+  }
 }

@@ -2,8 +2,7 @@ import connectModal from 'redux-modal/lib/connectModal';
 import { connect } from 'react-redux'
 import * as uniqid from 'uniqid';
 
-import { IRootState } from 'renderer/store/rootReducer';
-import { EntriesType } from 'renderer/entries/model';
+import { EntriesType, IRootState } from 'common/types/domain';
 import { useEntries } from 'renderer/entries/utils';
 import { imageWork } from 'renderer/groups/constants';
 import { ModalName } from 'renderer/modals/constants';

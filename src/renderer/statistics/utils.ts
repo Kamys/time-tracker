@@ -1,5 +1,4 @@
-import { IGroup } from 'renderer/groups/model';
-import { IActivity } from 'renderer/activity/model';
+import { IGroup, IActivity } from 'common/types/domain';
 
 export const getGroupTime = (group: IGroup, activity: IActivity[]) => {
     const regExp = new RegExp(group.regExp)

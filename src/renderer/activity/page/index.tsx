@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as lodash from 'lodash';
 
-import { IRootState } from 'renderer/store/rootReducer';
+import { IRootState } from 'common/types/domain';
 import TableActivity from 'renderer/components/TableActivity';
 import { GlobalAction } from 'renderer/store/globalActions';
 import { getActivities } from '../selectors';
