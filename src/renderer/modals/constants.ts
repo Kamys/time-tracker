@@ -1,3 +1,3 @@
 export enum ModalName {
-    FormGroup = 'CreateGroup',
+  FormGroup = 'CreateGroup',
 }

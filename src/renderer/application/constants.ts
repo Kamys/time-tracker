@@ -1,5 +1,5 @@
 export enum TypeTabs {
-    Activities = 'Activities',
-    Groups = 'Groups',
-    Statistics = 'Statistics',
+  Activities = 'Activities',
+  Groups = 'Groups',
+  Statistics = 'Statistics',
 }

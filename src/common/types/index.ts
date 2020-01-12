@@ -1,3 +1,3 @@
 export interface IDictionary<TValue> {
-    [key: string]: TValue;
+  [key: string]: TValue
 }

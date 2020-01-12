@@ -1,36 +1,36 @@
-import { Component } from 'react';
-import * as React from 'react';
+import { Component } from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 
-import { EntriesType, IRootState } from 'common/types/domain';
-import { useEntries } from 'renderer/entries/utils';
+import { EntriesType, IRootState } from 'common/types/domain'
+import { useEntries } from 'renderer/entries/utils'
 
-export interface IState {
-
-}
+export interface IState {}
 
 export interface IProps {
-    entityName: EntriesType,
-    entityId: string,
+  entityName: EntriesType
+  entityId: string
 }
 
 class Form extends Component<IProps & injectProps, IState> {
+  state: IState = {}
 
-    state: IState = {};
+  render() {
+    const { entity, onChange, onCreate, children } = this.props
 
-    render() {
-        const {entity, onChange, onCreate, children} = this.props;
-
-        return React.cloneElement(children as any, {entity, onChange, onCreate});
-    }
+    return React.cloneElement(children as any, { entity, onChange, onCreate })
+  }
 }
 
 const mapStateToProps = (state: IRootState, props: IProps) => {
-    return useEntries(state, props.entityName, props.entityId);
+  return useEntries(state, props.entityName, props.entityId)
 }
 
 const dispatchToProps = (dispatch, props: IProps) => ({})
 
-type injectProps = ReturnType<typeof mapStateToProps>;
+type injectProps = ReturnType<typeof mapStateToProps>
 
-export default connect<injectProps, IProps>(mapStateToProps, dispatchToProps)(Form)
+export default connect<injectProps, IProps>(
+  mapStateToProps,
+  dispatchToProps,
+)(Form)

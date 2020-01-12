@@ -1,45 +1,44 @@
-import * as React from 'react';
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import * as lodash from 'lodash';
+import * as React from 'react'
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
+import * as lodash from 'lodash'
 
-import { IRootState } from 'common/types/domain';
-import TableActivity from 'renderer/components/TableActivity';
-import { GlobalAction } from 'renderer/store/globalActions';
-import { getActivities } from '../selectors';
+import { IRootState } from 'common/types/domain'
+import TableActivity from 'renderer/components/TableActivity'
+import { GlobalAction } from 'renderer/store/globalActions'
+import { getActivities } from '../selectors'
 
-import './index.css';
-import useInterval from 'renderer/activity/utils';
+import './index.css'
+import useInterval from 'renderer/activity/utils'
 
 const mapStateToProps = (state: IRootState) => ({
-    activities: getActivities(state),
-});
+  activities: getActivities(state),
+})
 
-type injectProps = ReturnType<typeof mapStateToProps>;
+type injectProps = ReturnType<typeof mapStateToProps>
 
-interface IProps extends injectProps {
-
-}
+interface IProps extends injectProps {}
 
 const Activity = (props: IProps) => {
+  const updateActivity = () => {
+    GlobalAction.entries.loading.REQUEST({ entityName: 'activity' })
+  }
 
-    const updateActivity = () => {
-        GlobalAction.entries.loading.REQUEST({entityName: 'activity'});
-    };
+  useEffect(() => {
+    updateActivity()
+  }, [])
 
-    useEffect(() => {
-        updateActivity();
-    }, []);
+  useInterval(updateActivity, 5 * 1000)
 
-    useInterval(updateActivity, 5 * 1000);
+  const { activities } = props
 
-    const {activities} = props;
+  return <TableActivity activities={activities} />
+}
 
-    return (
-        <TableActivity activities={activities}/>
-    );
-};
+const areEqual = (prevProps: IProps, nextProps: IProps) =>
+  lodash.isEqual(prevProps.activities, nextProps.activities)
 
-const areEqual = (prevProps: IProps, nextProps: IProps) => lodash.isEqual(prevProps.activities, nextProps.activities);
-
-export default connect<injectProps, IProps>(mapStateToProps, null)(React.memo(Activity, areEqual));
+export default connect<injectProps, IProps>(
+  mapStateToProps,
+  null,
+)(React.memo(Activity, areEqual))

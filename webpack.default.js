@@ -1,8 +1,8 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 const paths = {
   out: path.join(__dirname, './build'),
@@ -27,10 +27,7 @@ const webpackModulesRule = {
     },
     {
       test: /\.css$/,
-      use: [
-        {loader: 'style-loader'},
-        {loader: 'css-loader'},
-      ],
+      use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
     },
     {
       test: /\.(png|jpe?g|gif)$/i,
@@ -41,10 +38,11 @@ const webpackModulesRule = {
       ],
     },
     {
-      test: /\.(woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000',
-    }
-  ]
-};
+      test: /\.(woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000',
+    },
+  ],
+}
 
 const commonConfig = {
   context: paths.source,
@@ -69,7 +67,7 @@ const commonConfig = {
   },
   devServer: {
     contentBase: paths.out,
-    port: 8000
+    port: 8000,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -77,11 +75,9 @@ const commonConfig = {
       filename: 'index.html',
       inject: 'body',
     }),
-    new CopyWebpackPlugin([
-      {from: '../package.json', to: '../build'},
-    ]),
+    new CopyWebpackPlugin([{ from: '../package.json', to: '../build' }]),
   ],
   module: webpackModulesRule,
-};
+}
 
-module.exports = {commonConfig, isProduction};
+module.exports = { commonConfig, isProduction }

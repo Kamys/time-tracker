@@ -1,4 +1,4 @@
-const {commonConfig, isProduction} = require('./webpack.default');
+const { commonConfig, isProduction } = require('./webpack.default')
 
 const webpackElectron = {
   ...commonConfig,
@@ -6,7 +6,7 @@ const webpackElectron = {
   entry: {
     main: './main/index.ts',
   },
-};
+}
 
 const webpackReact = {
   ...commonConfig,
@@ -14,18 +14,15 @@ const webpackReact = {
   entry: {
     renderer: './renderer/index.tsx',
   },
-};
+}
 
-console.log('isProduction = ' + isProduction);
+console.log('isProduction = ' + isProduction)
 
 module.exports = env => {
   const targets = []
 
   if (isProduction) {
-    return [
-      webpackElectron,
-      webpackReact,
-    ];
+    return [webpackElectron, webpackReact]
   }
 
   if (env.render) {
@@ -36,6 +33,5 @@ module.exports = env => {
     targets.push(webpackElectron)
   }
 
-  return targets;
-};
-
+  return targets
+}
