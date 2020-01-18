@@ -19,6 +19,7 @@ const destructionApp = () => {
 
 const createTray = () => {
   const trayIcon = path.join(__dirname, trayIconPath)
+
   tray = new Tray(trayIcon)
   const contextMenu = Menu.buildFromTemplate([
     {
