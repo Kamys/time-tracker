@@ -1,3 +1,3 @@
-import useStore from './useStore'
+import StorageFacade from './StorageFacade'
 
-export default useStore
+export default StorageFacade

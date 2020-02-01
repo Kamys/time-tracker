@@ -1,20 +1,25 @@
 import * as loadDevTool from 'electron-load-devtool'
-import { app, BrowserWindow, ipcMain, Menu, screen, Tray } from 'electron'
+import { app, BrowserWindow, Menu, screen, Tray } from 'electron'
 
 import trayIconPath from 'src/assets/icon.png'
 import { isProduction } from 'common/constant'
-import { IRootState } from 'common/types/domain'
-import useStore from './moduleStorage'
-import trackActivities from './trackActivities'
+import StorageFacade from './moduleStorage'
+import { ObservableActivity } from './trackActivity'
 import * as path from 'path'
+import createWindowEmitter from 'main/createWindowEmitter'
+import { ObserverRenderer } from 'main/ObserverRenderer'
+import { Emitter } from 'common/emitter/type'
+import { ActionsElectronStrings } from 'common/emitter/events'
 console.log('Run main')
 let win = null
+let emitter: Emitter<typeof ActionsElectronStrings>
 let tray
 let forceQuit = false
+const observableActivity = new ObservableActivity()
 
 const destructionApp = () => {
   win = null
-  trackActivities.destruction()
+  observableActivity.destroy()
 }
 
 const createTray = () => {
@@ -42,20 +47,11 @@ const createTray = () => {
 }
 
 const recordActivity = () => {
-  useStore('activity')
-    .get()
-    .then(activities => {
-      trackActivities.setActivities(activities)
-    })
-    .then(() => {
-      win.webContents.once('dom-ready', () => {
-        trackActivities.startRecordActivities()
-        setInterval(() => {
-          const activities = trackActivities.getActivities()
-          useStore('activity').update(activities)
-        }, 5 * 1000)
-      })
-    })
+  win.webContents.once('dom-ready', () => {
+    observableActivity.subscribe(StorageFacade.observerActivity)
+    const observerRenderer = new ObserverRenderer(emitter)
+    observableActivity.subscribe(observerRenderer)
+  })
 }
 
 const createWindow = () => {
@@ -70,6 +66,8 @@ const createWindow = () => {
     },
   })
 
+  emitter = createWindowEmitter(win)
+
   if (isProduction) {
     win.loadFile(path.join(__dirname, './index.html'))
   } else {
@@ -83,56 +81,50 @@ const createWindow = () => {
       if (!forceQuit) {
         win.hide()
       } else {
-        win.webContents.send('close-app-request')
+        emitter.handleSend('closeApp').then(() => {
+          win = null
+          if (process.platform !== 'darwin') {
+            app.quit()
+          }
+        })
       }
     }
   })
 
-  recordActivity()
   loadDevTool(loadDevTool.REDUX_DEVTOOLS)
   loadDevTool(loadDevTool.REACT_DEVELOPER_TOOLS)
 }
 
 const createListeners = () => {
-  ipcMain.on('get-activities-request', (action, props) => {
-    useStore('activity')
-      .get()
-      .then(activities => {
-        win.webContents.send('get-activities-success', activities)
-      })
+  emitter.handle('loadActivity', ({ resolve }) => {
+    StorageFacade.activity.get().then(resolve)
   })
 
-  ipcMain.on('load-store-request', () => {
-    const loadingActivity = useStore('activity').get()
-    const loadingGroup = useStore('group').get()
+  emitter.handle('loadStore', async ({ resolve }) => {
+    const loadingActivity = StorageFacade.activity.get()
+    const loadingGroup = StorageFacade.group.get()
 
-    Promise.all([loadingActivity, loadingGroup]).then(([activity, group]) => {
-      const store = {
-        entries: {
-          activity,
-          group,
-        },
-      }
-      win.webContents.send('load-store', store)
-    })
-  })
-
-  ipcMain.on('close-app', () => {
-    win = null
-    if (process.platform !== 'darwin') {
-      app.quit()
+    const [activity, group] = await Promise.all([loadingActivity, loadingGroup])
+    const store = {
+      entries: {
+        activity,
+        group,
+      },
     }
+    resolve(store)
   })
 
-  ipcMain.on('save-store', (action, store: IRootState) => {
-    const { activity, group } = store.entries
-    useStore('activity').update(activity)
-    useStore('group').update(group)
+  emitter.handle('saveStore', async ({ payload, resolve }) => {
+    const { activity, group } = payload.entries
+    await StorageFacade.activity.update(activity)
+    await StorageFacade.group.update(group)
+    resolve()
   })
 }
 
 app.on('ready', () => {
   createWindow()
+  recordActivity()
   createTray()
   createListeners()
 })

@@ -10,7 +10,7 @@ const DAY_RANGE = 365 * 2;
 const ACTIVITIES_IN_DAY = 50;
 
 const dataBase = datastore({
-	filename: '../../dataBaseTest',
+	filename: './dataBaseTest',
 	autoload: true
 });
 

@@ -19,7 +19,6 @@ export const mergeArray = (baseArray, newArray) => {
 
 export const removeItem = <T>(list: T[], predicate: (T) => boolean): T[] => {
   const index = list.findIndex(predicate)
-  console.log('index: ', index)
   if (index <= -1) {
     return list
   }

@@ -4,9 +4,12 @@ import { IRootState } from 'common/types/domain'
 const createAsyncActions = createActionCreator('ELECTRON')
 
 export const ActionsElectron = {
-  loadingStore: createAsyncActions<void, { store: IRootState }>(
-    'LOADING_STORE',
+  loadStore: createAsyncActions<void, { store: IRootState }>(
+    'LOAD_STORE',
   ),
+  loadActivity: createAsyncActions('LOAD_ACTIVITY'),
+  closeApp: createAsyncActions('CLOSE_APP'),
+  saveStore: createAsyncActions('SAVE_STORE')
 }
 
 export type TypeActionsElectron = typeof ActionsElectron

@@ -28,8 +28,6 @@ const Activity = (props: IProps) => {
     updateActivity()
   }, [])
 
-  useInterval(updateActivity, 5 * 1000)
-
   const { activities } = props
 
   return <TableActivity activities={activities} />

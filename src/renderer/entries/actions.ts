@@ -16,5 +16,3 @@ export const ActionsEntries = {
   ),
   change: createAsyncActions<{ entityName: EntriesType; id: string }>('UPDATE'),
 }
-
-export type TypeActionsEntries = typeof ActionsEntries

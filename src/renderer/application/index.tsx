@@ -13,7 +13,7 @@ const Application = () => {
   const [activeTabs, setActiveTabs] = useState<TypeTabs>(TypeTabs.Activities)
 
   useEffect(() => {
-    GlobalAction.electron.loadingStore.REQUEST()
+    GlobalAction.electron.loadStore.REQUEST()
   }, [])
 
   const onSelectTab = (tab: TypeTabs) => () => {

@@ -11,7 +11,7 @@ const getUserDataPath = () => {
   return './tmpData'
 }
 
-const createDataStore = (name: string) => {
+const createDataStore = (name: string): Datastore => {
   const dataPath = getUserDataPath()
   return Datastore({
     filename: path.resolve(dataPath, name),
