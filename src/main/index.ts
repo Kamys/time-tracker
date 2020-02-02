@@ -81,7 +81,7 @@ const createWindow = () => {
       if (!forceQuit) {
         win.hide()
       } else {
-        emitter.handleSend('closeApp').then(() => {
+        setTimeout(() => {
           win = null
           if (process.platform !== 'darwin') {
             app.quit()
@@ -112,13 +112,6 @@ const createListeners = () => {
       },
     }
     resolve(store)
-  })
-
-  emitter.handle('saveStore', async ({ payload, resolve }) => {
-    const { activity, group } = payload.entries
-    await StorageFacade.activity.update(activity)
-    await StorageFacade.group.update(group)
-    resolve()
   })
 }
 

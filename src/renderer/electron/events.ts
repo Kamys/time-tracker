@@ -12,22 +12,11 @@ const rendererEmitter = emitter.createEmitter({
   actions: ActionsElectronStrings,
 })
 
-export const subscribeCloseApp = () => {
-  rendererEmitter.handle('closeApp', async ({ resolve }) => {
-    await saveStore(reduxStore.getState())
-    resolve()
-  })
-}
-
 export const subscribeUpdateActivity = (cb: (activity: IActivity) => void) => {
   rendererEmitter.handle('addActivity', async ({ payload }) => {
     cb(payload)
   })
   return () => {}
-}
-
-export const saveStore = (store: IRootState) => {
-  return rendererEmitter.handleSend('saveStore', store)
 }
 
 export const loadStore = async () => {
