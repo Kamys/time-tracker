@@ -9,7 +9,7 @@ enum StoreNames {
 
 const activity = new ActivityController()
 const group = new CommonController(StoreNames.GROUP)
-const observerActivity = new ObserverDataBase()
+const observerActivity = new ObserverDataBase(activity)
 
 export default {
   activity,

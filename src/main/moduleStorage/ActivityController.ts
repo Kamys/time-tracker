@@ -1,8 +1,8 @@
 import dataStoreProvider from 'main/moduleStorage/createStore'
 import { getToday } from 'main/utils'
+import { IActivity } from 'common/types/domain'
 
 class ActivityController {
-
   private db: any
   private today = getToday()
 
@@ -20,6 +20,22 @@ class ActivityController {
       .cfind({ date })
       .sort({ lastUpdate: -1 })
       .exec()
+  }
+
+  addActivity = async <T>(newActivity: IActivity): Promise<T> => {
+    const activity = await this.db.findOne({ title: newActivity.title })
+
+    if (!activity) {
+      return this.db.insert(newActivity)
+    }
+
+    return this.db.update(
+      { title: activity.title },
+      {
+        $inc: { secondsSpent: 1 },
+        $set: { lastUpdate: new Date().valueOf() },
+      },
+    )
   }
 }
 
