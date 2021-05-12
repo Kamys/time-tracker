@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "active-win": "^6.0.0",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "chartjs-plugin-labels": "^1.1.0",
     "history": "^4.10.1",
     "lodash": "^4.17.15",
